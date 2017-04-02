@@ -61,52 +61,7 @@
 		</m:MaterialPanel>
 		
 		<m:MaterialPanel ui:field="panelPlayers">
-			<m:MaterialCollapsible grid="s12" textAlign="CENTER" ui:field="panelPlayersCollapse">
-				<!-- collapsibleZone_2 -->
-				<m:MaterialCollapsibleItem ui:field="collapsibleZone_2">
-					<m:MaterialCollapsibleHeader>
-						<m:MaterialLink text="Mika" iconType="POLYMER" iconPosition="LEFT" textColor="BLACK"/>
-					</m:MaterialCollapsibleHeader>
-					<m:MaterialCollapsibleBody ui:field="player_2">
-						<m:MaterialRow ui:field="handRow_2"/>
-					</m:MaterialCollapsibleBody>
-				</m:MaterialCollapsibleItem>
-				<!-- collapsibleZone_3 -->
-				<m:MaterialCollapsibleItem ui:field="collapsibleZone_3">
-					<m:MaterialCollapsibleHeader>
-						<m:MaterialLink text="Antoine" iconType="POLYMER" iconPosition="LEFT" textColor="BLACK"/>
-					</m:MaterialCollapsibleHeader>
-					<m:MaterialCollapsibleBody ui:field="player_3">
-						<m:MaterialRow ui:field="handRow_3"/>
-					</m:MaterialCollapsibleBody>
-				</m:MaterialCollapsibleItem>
-				<!-- collapsibleZone_4 -->
-				<m:MaterialCollapsibleItem ui:field="collapsibleZone_4">
-					<m:MaterialCollapsibleHeader>
-						<m:MaterialLink text="Maël" iconType="POLYMER" iconPosition="LEFT" textColor="BLACK"/>
-					</m:MaterialCollapsibleHeader>
-					<m:MaterialCollapsibleBody ui:field="player_4">
-						<m:MaterialRow ui:field="handRow_4"/>
-					</m:MaterialCollapsibleBody>
-				</m:MaterialCollapsibleItem>
-				<!-- collapsibleZone_5 -->
-				<m:MaterialCollapsibleItem ui:field="collapsibleZone_5">
-					<m:MaterialCollapsibleHeader>
-						<m:MaterialLink text="Hejun" iconType="POLYMER" iconPosition="LEFT" textColor="BLACK"/>
-					</m:MaterialCollapsibleHeader>
-					<m:MaterialCollapsibleBody ui:field="player_5">
-						<m:MaterialRow ui:field="handRow_5"/>
-					</m:MaterialCollapsibleBody>
-				</m:MaterialCollapsibleItem>
-				<!-- collapsibleZone_1 -->
-				<m:MaterialCollapsibleItem active="true" ui:field="collapsibleZone_1">
-					<m:MaterialCollapsibleHeader>
-						<m:MaterialLink text="YOU" iconType="POLYMER" iconPosition="LEFT" textColor="BLACK"/>
-					</m:MaterialCollapsibleHeader>
-					<m:MaterialCollapsibleBody ui:field="player_1">
-						<m:MaterialRow ui:field="handRow_1"/>
-					</m:MaterialCollapsibleBody>
-				</m:MaterialCollapsibleItem>
+			<m:MaterialCollapsible grid="s12" textAlign="CENTER" ui:field="playerZones">
 			</m:MaterialCollapsible>
 			<m:MaterialPanel>
 				<m:MaterialRow>

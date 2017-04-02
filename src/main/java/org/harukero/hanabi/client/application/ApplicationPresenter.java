@@ -19,10 +19,15 @@
  */
 package org.harukero.hanabi.client.application;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.IntStream;
 
 import org.harukero.hanabi.client.controllers.HanabiCardController;
+import org.harukero.hanabi.client.controllers.PlayerHandViewController;
 import org.harukero.hanabi.client.views.HanabiCardView;
+import org.harukero.hanabi.client.views.PlayerZoneView;
 import org.harukero.hanabi.shared.HanabiCard;
 import org.harukero.hanabi.shared.HanabiState;
 
@@ -34,10 +39,6 @@ import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.presenter.slots.NestedSlot;
 import com.gwtplatform.mvp.client.proxy.Proxy;
 
-import gwt.material.design.client.ui.MaterialCollapsibleBody;
-import gwt.material.design.client.ui.MaterialCollapsibleItem;
-import gwt.material.design.client.ui.MaterialRow;
-
 public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView, ApplicationPresenter.MyProxy> {
 
 	@ProxyStandard
@@ -45,36 +46,11 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
 	}
 
 	interface MyView extends View {
-		void addCardForWidgetIfPossible(MaterialCollapsibleBody playersBody, MaterialRow playersCardRow,
-				HanabiCardView hanabiCardView);
 
-		MaterialCollapsibleItem getCollapsibleZone_3();
+		void addCardForWidgetIfPossible(PlayerZoneView playerZone, HanabiCardView cardView);
 
-		MaterialCollapsibleItem getCollapsibleZone_4();
+		void addPlayerZone(PlayerZoneView playerZone);
 
-		MaterialCollapsibleItem getCollapsibleZone_5();
-
-		MaterialRow getHandRow_1();
-
-		MaterialRow getHandRow_2();
-
-		MaterialRow getHandRow_3();
-
-		MaterialRow getHandRow_4();
-
-		MaterialRow getHandRow_5();
-
-		MaterialCollapsibleBody getPlayer_1();
-
-		MaterialCollapsibleBody getPlayer_2();
-
-		MaterialCollapsibleBody getPlayer_3();
-
-		MaterialCollapsibleBody getPlayer_4();
-
-		MaterialCollapsibleBody getPlayer_5();
-
-		void initView(HanabiState state);
 	}
 
 	public static final NestedSlot SLOT_MAIN = new NestedSlot();
@@ -83,39 +59,45 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
 
 	private MyView view;
 
+	private Map<Integer, PlayerHandViewController> playerControllerById = new HashMap<>();
+
 	@Inject
 	ApplicationPresenter(EventBus eventBus, MyView view, MyProxy proxy) {
 		super(eventBus, view, proxy, RevealType.Root);
 		this.view = view;
-		model = new HanabiState(2);
+		model = new HanabiState(4);
 
 		initView();
 	}
 
-	private void drawForPlayer(List<HanabiCard> cardsList, MaterialCollapsibleBody player, MaterialRow hand) {
+	private void drawForPlayer(List<HanabiCard> cardsList, PlayerHandViewController playerController) {
 		cardsList.stream().forEach(card -> {
 			HanabiCardView cardView = HanabiCardView.createCardForColor(card.getColor(), card.getNumber());
-			HanabiCardController cardController = new HanabiCardController(card, cardView);
-			view.addCardForWidgetIfPossible(player, hand, cardView);
+			HanabiCardController cardController = new HanabiCardController(model, card, cardView);
+			PlayerZoneView playerZone = playerController.getView();
+			view.addCardForWidgetIfPossible(playerZone, cardView);
 		});
 	}
 
 	private void initView() {
 		int nbOfPlayers = model.getNbOfPlayers();
-		drawForPlayer(model.getPlayersHand(1), view.getPlayer_1(), view.getHandRow_1());
-		drawForPlayer(model.getPlayersHand(2), view.getPlayer_2(), view.getHandRow_2());
+		IntStream.rangeClosed(1, nbOfPlayers).forEach(playerId -> {
+			PlayerZoneView playerView = new PlayerZoneView("Player " + playerId);
+			PlayerHandViewController playerController = new PlayerHandViewController(playerView);
+			view.addPlayerZone(playerView);
+			playerControllerById.put(playerId, playerController);
+		});
+		drawForPlayer(model.getPlayersHand(1), playerControllerById.get(1));
+		drawForPlayer(model.getPlayersHand(2), playerControllerById.get(2));
 
 		if (nbOfPlayers > 2) {
-			view.getCollapsibleZone_3().setVisible(true);
-			drawForPlayer(model.getPlayersHand(3), view.getPlayer_3(), view.getHandRow_3());
+			drawForPlayer(model.getPlayersHand(3), playerControllerById.get(3));
 		}
 		if (nbOfPlayers > 3) {
-			view.getCollapsibleZone_4().setVisible(true);
-			drawForPlayer(model.getPlayersHand(4), view.getPlayer_4(), view.getHandRow_4());
+			drawForPlayer(model.getPlayersHand(4), playerControllerById.get(4));
 		}
 		if (nbOfPlayers > 4) {
-			view.getCollapsibleZone_5().setVisible(true);
-			drawForPlayer(model.getPlayersHand(5), view.getPlayer_5(), view.getHandRow_5());
+			drawForPlayer(model.getPlayersHand(5), playerControllerById.get(5));
 		}
 	}
 }

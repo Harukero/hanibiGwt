@@ -27,7 +27,7 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import org.harukero.hanabi.client.views.HanabiCardView;
-import org.harukero.hanabi.shared.HanabiState;
+import org.harukero.hanabi.client.views.PlayerZoneView;
 
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -35,8 +35,8 @@ import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewImpl;
 
 import gwt.material.design.client.ui.MaterialCard;
+import gwt.material.design.client.ui.MaterialCollapsible;
 import gwt.material.design.client.ui.MaterialCollapsibleBody;
-import gwt.material.design.client.ui.MaterialCollapsibleItem;
 import gwt.material.design.client.ui.MaterialColumn;
 import gwt.material.design.client.ui.MaterialPanel;
 import gwt.material.design.client.ui.MaterialRow;
@@ -49,42 +49,28 @@ public class ApplicationView extends ViewImpl implements ApplicationPresenter.My
 	private Map<MaterialRow, List<Widget>> cardsInHands;
 
 	@UiField
-	MaterialCollapsibleBody player_2, player_3, player_4, player_5, player_1;
-
-	@UiField
-	MaterialCollapsibleItem collapsibleZone_1, collapsibleZone_2, collapsibleZone_3, collapsibleZone_4,
-			collapsibleZone_5;
-
-	@UiField
 	MaterialPanel panelPlayers;
 
-	// @UiField
-	// MaterialCollapsible panelPlayersCollapse;
-
 	@UiField
-	MaterialColumn zone1, zone2, zone3, zone4, zone5;
-
-	@UiField
-	MaterialRow handRow_1, handRow_2, handRow_3, handRow_4, handRow_5;
+	MaterialCollapsible playerZones;
 
 	@Inject
 	ApplicationView(Binder uiBinder) {
 		initWidget(uiBinder.createAndBindUi(this));
 		handsByPlayers = new HashMap<>();
 		cardsInHands = new HashMap<>();
-		hidePlayers();
 	}
 
 	@Override
-	public void addCardForWidgetIfPossible(MaterialCollapsibleBody playersBody, MaterialRow playersCardRow,
-			HanabiCardView hanabiCardView) {
+	public void addCardForWidgetIfPossible(PlayerZoneView playerZone, HanabiCardView hanabiCardView) {
 		MaterialRow materialRow;
-		if (!handsByPlayers.containsKey(playersBody)) {
-			materialRow = playersCardRow;
-			handsByPlayers.put(playersBody, materialRow);
+		if (!handsByPlayers.containsKey(playerZone.getPlayerBody())) {
+			materialRow = playerZone.getPlayerHand();
+			handsByPlayers.put(playerZone.getPlayerBody(), materialRow);
 			cardsInHands.put(materialRow, new ArrayList<>());
 		}
-		materialRow = handsByPlayers.get(playersBody);
+		playerZone.setVisible(true);
+		materialRow = handsByPlayers.get(playerZone.getPlayerBody());
 		int size = cardsInHands.get(materialRow).size();
 		if (size < 5) {
 
@@ -102,78 +88,8 @@ public class ApplicationView extends ViewImpl implements ApplicationPresenter.My
 	}
 
 	@Override
-	public MaterialCollapsibleItem getCollapsibleZone_3() {
-		return collapsibleZone_3;
+	public void addPlayerZone(PlayerZoneView playerZone) {
+		playerZones.add(playerZone);
 	}
 
-	@Override
-	public MaterialCollapsibleItem getCollapsibleZone_4() {
-		return collapsibleZone_4;
-	}
-
-	@Override
-	public MaterialCollapsibleItem getCollapsibleZone_5() {
-		return collapsibleZone_5;
-	}
-
-	@Override
-	public MaterialRow getHandRow_1() {
-		return handRow_1;
-	}
-
-	@Override
-	public MaterialRow getHandRow_2() {
-		return handRow_2;
-	}
-
-	@Override
-	public MaterialRow getHandRow_3() {
-		return handRow_3;
-	}
-
-	@Override
-	public MaterialRow getHandRow_4() {
-		return handRow_4;
-	}
-
-	@Override
-	public MaterialRow getHandRow_5() {
-		return handRow_5;
-	}
-
-	@Override
-	public MaterialCollapsibleBody getPlayer_1() {
-		return player_1;
-	}
-
-	@Override
-	public MaterialCollapsibleBody getPlayer_2() {
-		return player_2;
-	}
-
-	@Override
-	public MaterialCollapsibleBody getPlayer_3() {
-		return player_3;
-	}
-
-	@Override
-	public MaterialCollapsibleBody getPlayer_4() {
-		return player_4;
-	}
-
-	@Override
-	public MaterialCollapsibleBody getPlayer_5() {
-		return player_5;
-	}
-
-	private void hidePlayers() {
-		collapsibleZone_3.setVisible(false);
-		collapsibleZone_4.setVisible(false);
-		collapsibleZone_5.setVisible(false);
-	}
-
-	@Override
-	public void initView(HanabiState model) {
-
-	}
 }

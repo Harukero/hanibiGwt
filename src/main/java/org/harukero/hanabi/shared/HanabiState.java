@@ -1,12 +1,10 @@
 package org.harukero.hanabi.shared;
 
-import java.util.ArrayDeque;
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.IntStream;
 
@@ -15,21 +13,23 @@ import org.harukero.hanabi.shared.utils.SharedUtils;
 
 import gwt.material.design.client.constants.Color;
 
-public class HanabiState {
+public class HanabiState implements Serializable {
 
-	private static Map<Integer, Integer> nbOfCardByRank = new HashMap<>();
+	private static Logger logger = Logger.getLogger("HanabiLogger");
 
-	static {
-		nbOfCardByRank.put(1, 3);
-		nbOfCardByRank.put(2, 2);
-		nbOfCardByRank.put(3, 2);
-		nbOfCardByRank.put(4, 2);
-		nbOfCardByRank.put(5, 1);
+	public static Logger getLogger() {
+		return logger;
 	}
-	private final Logger logger = Logger.getLogger("HanabiLogger");
-	private Deque<HanabiCard> deck;
+
+	public static void setLogger(Logger logger) {
+		HanabiState.logger = logger;
+	}
+
+	private List<HanabiCard> deck;
 	private Map<Color, List<HanabiCard>> cardsByColor;
+
 	private int nbOfPlayers;
+
 	private Map<Integer, List<HanabiCard>> cardsByPlayers;
 
 	public HanabiState() {
@@ -63,7 +63,19 @@ public class HanabiState {
 		if (deck.isEmpty()) {
 			return null;
 		}
-		return deck.pop();
+		return deck.remove(0);
+	}
+
+	public Map<Color, List<HanabiCard>> getCardsByColor() {
+		return cardsByColor;
+	}
+
+	public Map<Integer, List<HanabiCard>> getCardsByPlayers() {
+		return cardsByPlayers;
+	}
+
+	public List<HanabiCard> getDeck() {
+		return deck;
 	}
 
 	public int getNbOfPlayers() {
@@ -94,14 +106,32 @@ public class HanabiState {
 	}
 
 	private void initDeck() {
-		deck = new ArrayDeque<>();
+		deck = new ArrayList<>();
 		List<HanabiCard> cards = new ArrayList<>();
 		ViewUtils.HANABI_COLORS.stream().forEach(color -> IntStream.rangeClosed(1, 5)
-				.forEach(rank -> IntStream.rangeClosed(1, nbOfCardByRank.get(rank)).forEach(item -> {
+				.forEach(rank -> IntStream.rangeClosed(1, SharedUtils.nbOfCardByRank.get(rank)).forEach(item -> {
 					cards.add(new HanabiCard(color, rank));
-					logger.log(Level.INFO, "added HanabiCard with color " + color + " and rank " + rank);
+					// logger.log(Level.INFO, "added HanabiCard with color " +
+					// color + " and rank " + rank);
 				})));
 		SharedUtils.shuffle(cards);
 		deck.addAll(cards);
 	}
+
+	public void setCardsByColor(Map<Color, List<HanabiCard>> cardsByColor) {
+		this.cardsByColor = cardsByColor;
+	}
+
+	public void setCardsByPlayers(Map<Integer, List<HanabiCard>> cardsByPlayers) {
+		this.cardsByPlayers = cardsByPlayers;
+	}
+
+	public void setDeck(List<HanabiCard> deck) {
+		this.deck = deck;
+	}
+
+	public void setNbOfPlayers(int nbOfPlayers) {
+		this.nbOfPlayers = nbOfPlayers;
+	}
+
 }
