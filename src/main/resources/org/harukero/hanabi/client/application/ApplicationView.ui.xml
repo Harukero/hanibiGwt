@@ -1,0 +1,173 @@
+<!--
+  #%L
+  GwtMaterial
+  %%
+  Copyright (C) 2015 - 2017 GwtMaterialDesign
+  %%
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  #L%
+  -->
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+        xmlns:g='urn:import:com.google.gwt.user.client.ui'
+        xmlns:m="urn:import:gwt.material.design.client.ui">
+
+    <ui:with field="res" type="org.harukero.hanabi.client.resources.AppResources"/>
+	
+    <m:MaterialPanel backgroundColor="BLUE_GREY_DARKEN_4">
+        <m:MaterialHeader>
+			<m:MaterialNavBar activates="mySidenav" backgroundColor="PURPLE_DARKEN_4">
+				<m:MaterialNavBrand text="HANABI" paddingLeft="20"/>
+<!-- 				<m:MaterialNavSection float="RIGHT"> -->
+<!-- 					<m:MaterialLink text="Login" href="#login"> -->
+<!-- 						<m:MaterialBadge text="1 new" backgroundColor="RED"/> -->
+<!-- 					</m:MaterialLink> -->
+<!-- 					<m:MaterialLink text="Signup" href="#signup"/> -->
+<!-- 				</m:MaterialNavSection> -->
+			</m:MaterialNavBar>
+			<!-- m:MaterialSideNav m:id="mySidenav" type="CARD" width="280">
+				<m:MaterialLink iconType="ANDROID" separator="true" ui:field="game_for_2"/>
+				<m:MaterialLink iconType="GROUP" separator="true" ui:field="game_for_3"/>
+				<m:MaterialLink iconType="MESSAGE" separator="true" ui:field="game_for_4"/>
+				<m:MaterialLink iconType="CAKE" separator="true" ui:field="game_for_5"/>
+				<m:MaterialLink iconType="ACCESS_ALARM" separator="true" ui:field="rules"/>
+			</m:MaterialSideNav -->
+        </m:MaterialHeader>
+		<m:MaterialPanel ui:field="lifePointsAndInfos">
+			<m:MaterialRow>
+				<m:MaterialColumn grid="s12" textAlign="CENTER">
+					<m:MaterialIcon iconType="FAVORITE" iconSize="MEDIUM" textColor="RED"/>
+					<m:MaterialIcon iconType="FAVORITE" iconSize="MEDIUM" textColor="RED"/>
+					<m:MaterialIcon iconType="FAVORITE" iconSize="MEDIUM" textColor="RED"/>
+					<m:MaterialIcon iconType="INFO" iconSize="MEDIUM" textColor="BLUE"/>
+					<m:MaterialIcon iconType="INFO" iconSize="MEDIUM" textColor="BLUE"/>
+					<m:MaterialIcon iconType="INFO" iconSize="MEDIUM" textColor="BLUE"/>
+					<m:MaterialIcon iconType="INFO" iconSize="MEDIUM" textColor="BLUE"/>
+					<m:MaterialIcon iconType="INFO" iconSize="MEDIUM" textColor="BLUE"/>
+					<m:MaterialIcon iconType="INFO" iconSize="MEDIUM" textColor="BLUE"/>
+					<m:MaterialIcon iconType="INFO" iconSize="MEDIUM" textColor="BLUE"/>
+					<m:MaterialIcon iconType="INFO" iconSize="MEDIUM" textColor="BLUE"/>
+				</m:MaterialColumn>
+			</m:MaterialRow>
+		</m:MaterialPanel>
+		
+		<m:MaterialPanel ui:field="panelPlayers">
+			<m:MaterialCollapsible grid="s12" textAlign="CENTER" ui:field="panelPlayersCollapse">
+				<!-- collapsibleZone_2 -->
+				<m:MaterialCollapsibleItem ui:field="collapsibleZone_2">
+					<m:MaterialCollapsibleHeader>
+						<m:MaterialLink text="Mika" iconType="POLYMER" iconPosition="LEFT" textColor="BLACK"/>
+					</m:MaterialCollapsibleHeader>
+					<m:MaterialCollapsibleBody ui:field="player_2">
+						<m:MaterialRow ui:field="handRow_2"/>
+					</m:MaterialCollapsibleBody>
+				</m:MaterialCollapsibleItem>
+				<!-- collapsibleZone_3 -->
+				<m:MaterialCollapsibleItem ui:field="collapsibleZone_3">
+					<m:MaterialCollapsibleHeader>
+						<m:MaterialLink text="Antoine" iconType="POLYMER" iconPosition="LEFT" textColor="BLACK"/>
+					</m:MaterialCollapsibleHeader>
+					<m:MaterialCollapsibleBody ui:field="player_3">
+						<m:MaterialRow ui:field="handRow_3"/>
+					</m:MaterialCollapsibleBody>
+				</m:MaterialCollapsibleItem>
+				<!-- collapsibleZone_4 -->
+				<m:MaterialCollapsibleItem ui:field="collapsibleZone_4">
+					<m:MaterialCollapsibleHeader>
+						<m:MaterialLink text="Maël" iconType="POLYMER" iconPosition="LEFT" textColor="BLACK"/>
+					</m:MaterialCollapsibleHeader>
+					<m:MaterialCollapsibleBody ui:field="player_4">
+						<m:MaterialRow ui:field="handRow_4"/>
+					</m:MaterialCollapsibleBody>
+				</m:MaterialCollapsibleItem>
+				<!-- collapsibleZone_5 -->
+				<m:MaterialCollapsibleItem ui:field="collapsibleZone_5">
+					<m:MaterialCollapsibleHeader>
+						<m:MaterialLink text="Hejun" iconType="POLYMER" iconPosition="LEFT" textColor="BLACK"/>
+					</m:MaterialCollapsibleHeader>
+					<m:MaterialCollapsibleBody ui:field="player_5">
+						<m:MaterialRow ui:field="handRow_5"/>
+					</m:MaterialCollapsibleBody>
+				</m:MaterialCollapsibleItem>
+				<!-- collapsibleZone_1 -->
+				<m:MaterialCollapsibleItem active="true" ui:field="collapsibleZone_1">
+					<m:MaterialCollapsibleHeader>
+						<m:MaterialLink text="YOU" iconType="POLYMER" iconPosition="LEFT" textColor="BLACK"/>
+					</m:MaterialCollapsibleHeader>
+					<m:MaterialCollapsibleBody ui:field="player_1">
+						<m:MaterialRow ui:field="handRow_1"/>
+					</m:MaterialCollapsibleBody>
+				</m:MaterialCollapsibleItem>
+			</m:MaterialCollapsible>
+			<m:MaterialPanel>
+				<m:MaterialRow>
+					<m:MaterialColumn grid="s2" ui:field="zone1">
+						<m:MaterialCard backgroundColor="WHITE">
+							<m:MaterialCardContent textColor="BLACK">
+								<m:MaterialCardTitle textColor="BLACK" text="WHITE" iconType="FAVORITE" iconPosition="RIGHT" iconColor="RED"/>
+								<m:MaterialLabel text="Zone for White Cards" />
+							</m:MaterialCardContent>
+							<m:MaterialCardAction>
+								<m:MaterialBadge text="0" backgroundColor="BLACK" textColor="WHITE" circle="true" ui:field="numberOfCards_white" visible="false"/>
+							</m:MaterialCardAction>
+						</m:MaterialCard>
+					</m:MaterialColumn>
+					<m:MaterialColumn grid="s2" ui:field="zone2">
+						<m:MaterialCard backgroundColor="RED">
+							<m:MaterialCardContent textColor="WHITE">
+								<m:MaterialCardTitle textColor="WHITE" text="RED" iconType="FAVORITE" iconPosition="RIGHT" iconColor="RED"/>
+								<m:MaterialLabel text="Zone for Red cards" />
+							</m:MaterialCardContent>
+							<m:MaterialCardAction>
+								<m:MaterialBadge text="0" backgroundColor="BLACK" textColor="WHITE" circle="true" ui:field="numberOfCards_red" visible="false"/>
+							</m:MaterialCardAction>
+						</m:MaterialCard>
+					</m:MaterialColumn>
+					<m:MaterialColumn grid="s2" ui:field="zone3">
+						<m:MaterialCard backgroundColor="BLUE">
+							<m:MaterialCardContent textColor="WHITE">
+								<m:MaterialCardTitle textColor="WHITE" text="BLUE" iconType="FAVORITE" iconPosition="RIGHT" iconColor="RED"/>
+								<m:MaterialLabel text="Zone for Blue cards" />
+							</m:MaterialCardContent>
+							<m:MaterialCardAction>
+								<m:MaterialBadge text="0" backgroundColor="BLACK" textColor="WHITE" circle="true" ui:field="numberOfCards_blue" visible="false"/>					
+							</m:MaterialCardAction>
+						</m:MaterialCard>
+					</m:MaterialColumn>
+					<m:MaterialColumn grid="s2" ui:field="zone4">
+						<m:MaterialCard backgroundColor="YELLOW">
+							<m:MaterialCardContent textColor="BLACK">
+								<m:MaterialCardTitle text="YELLOW" iconType="POLYMER" iconPosition="RIGHT"/>
+								<m:MaterialLabel text="Zone for Yellow cards" />
+							</m:MaterialCardContent>
+							<m:MaterialCardAction>
+								<m:MaterialBadge text="0" backgroundColor="BLACK" textColor="WHITE" circle="true" ui:field="numberOfCards_yellow" visible="false"/>					
+							</m:MaterialCardAction>
+						</m:MaterialCard>
+					</m:MaterialColumn>
+					<m:MaterialColumn grid="s2" ui:field="zone5">
+						<m:MaterialCard backgroundColor="GREEN">
+						<m:MaterialCardContent textColor="WHITE">
+							<m:MaterialCardTitle text="GREEN" iconType="POLYMER" iconPosition="RIGHT"/>
+							<m:MaterialLabel text="Zone for Green cards" />
+						</m:MaterialCardContent>
+							<m:MaterialCardAction>
+								<m:MaterialBadge text="0" backgroundColor="BLACK" textColor="WHITE" circle="true" ui:field="numberOfCards_green" visible="false"/>					
+							</m:MaterialCardAction>
+						</m:MaterialCard>
+					</m:MaterialColumn>
+				</m:MaterialRow>
+			</m:MaterialPanel>
+	    </m:MaterialPanel>
+		
+	</m:MaterialPanel>
+</ui:UiBinder>
