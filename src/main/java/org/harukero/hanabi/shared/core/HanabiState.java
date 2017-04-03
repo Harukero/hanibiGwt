@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.IntStream;
 
 import org.harukero.hanabi.shared.utils.SharedUtils;
@@ -13,6 +15,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 import gwt.material.design.client.constants.Color;
 
 public class HanabiState implements IsSerializable {
+	private static final Logger logger = Logger.getLogger("HanabiLogger");
 
 	private List<HanabiCard> deck;
 	private Map<Color, List<HanabiCard>> cardsByColor;
@@ -43,6 +46,11 @@ public class HanabiState implements IsSerializable {
 		initCardsByPlayers(nbOfPlayers > 3 ? 4 : 5);
 	}
 
+	public HanabiActionStatus discardCard(HanabiCard cardImpacted, int playerId) {
+		boolean success = cardsByPlayers.get(playerId).remove(cardImpacted);
+		return success ? HanabiActionStatus.SUCCESS : HanabiActionStatus.ERROR;
+	}
+
 	/**
 	 *
 	 * @return the top HanabiCard of the deck. <code>null</code> if the deck is
@@ -53,6 +61,13 @@ public class HanabiState implements IsSerializable {
 			return null;
 		}
 		return deck.remove(0);
+	}
+
+	public void drawCard(int playerId) {
+		HanabiCard card = drawCard();
+		if (card != null) {
+			cardsByPlayers.get(playerId).add(card);
+		}
 	}
 
 	public Map<Color, List<HanabiCard>> getCardsByColor() {
@@ -100,9 +115,19 @@ public class HanabiState implements IsSerializable {
 		SharedUtils.HANABI_COLORS.stream()
 				.forEach(color -> IntStream.rangeClosed(1, 5)
 						.forEach(rank -> IntStream.rangeClosed(1, SharedUtils.nbOfCardByRank.get(rank))
-								.forEach(item -> cards.add(new HanabiCard(color, rank)))));
+								.forEach(itemId -> cards.add(new HanabiCard(color, rank, itemId)))));
 		SharedUtils.shuffle(cards);
 		deck.addAll(cards);
+	}
+
+	public HanabiActionStatus playCard(HanabiCard cardImpacted, int playerId) {
+		boolean success = cardsByPlayers.get(playerId).remove(cardImpacted);
+		logger.log(Level.INFO, "trying to remove " + cardImpacted + " is it a success? " + success);
+		if (!success) {
+			return HanabiActionStatus.ERROR;
+		}
+		this.cardsByColor.get(cardImpacted.getColor()).add(cardImpacted);
+		return HanabiActionStatus.SUCCESS;
 	}
 
 	public void setCardsByColor(Map<Color, List<HanabiCard>> cardsByColor) {

@@ -22,6 +22,8 @@ package org.harukero.hanabi.client.application;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.IntStream;
 
 import org.harukero.hanabi.client.controllers.HanabiCardController;
@@ -39,8 +41,8 @@ import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.presenter.slots.NestedSlot;
 import com.gwtplatform.mvp.client.proxy.Proxy;
 
-public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView, ApplicationPresenter.MyProxy> {
-
+public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView, ApplicationPresenter.MyProxy>
+		implements IParent {
 	@ProxyStandard
 	interface MyProxy extends Proxy<ApplicationPresenter> {
 	}
@@ -54,6 +56,8 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
 		void resetPlayerZone();
 
 	}
+
+	private static final Logger logger = Logger.getLogger("HanabiLogger");
 
 	public static final NestedSlot SLOT_MAIN = new NestedSlot();
 
@@ -69,41 +73,51 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
 		this.view = view;
 		model = new HanabiState(4);
 
-		initView();
+		initView(model);
 	}
 
-	private void drawForPlayer(List<HanabiCard> cardsList, PlayerHandViewController playerController) {
+	private void drawForPlayer(List<HanabiCard> cardsList, PlayerHandViewController playerController,
+			boolean isForViewPlayer) {
 		cardsList.stream().forEach(card -> {
-			HanabiCardView cardView = HanabiCardView.createCardForColor(card.getColor(), card.getNumber());
-			HanabiCardController cardController = new HanabiCardController(model, card, cardView);
+			HanabiCardView cardView = HanabiCardView.createCardForColor(card.getColor(), card.getNumber(),
+					isForViewPlayer);
+			HanabiCardController cardController = new HanabiCardController(this, model, card, cardView);
 			PlayerZoneView playerZone = playerController.getView();
 			view.addCardForWidgetIfPossible(playerZone, cardView);
 		});
 	}
 
-	private void initView() {
+	private void initView(HanabiState model) {
 		int nbOfPlayers = model.getNbOfPlayers();
 		resetPlayerZones(nbOfPlayers);
-		drawForPlayer(model.getPlayersHand(1), playerControllerById.get(1));
-		drawForPlayer(model.getPlayersHand(2), playerControllerById.get(2));
+		drawForPlayer(model.getPlayersHand(1), playerControllerById.get(1), true);
+		drawForPlayer(model.getPlayersHand(2), playerControllerById.get(2), false);
 
 		if (nbOfPlayers > 2) {
-			drawForPlayer(model.getPlayersHand(3), playerControllerById.get(3));
+			drawForPlayer(model.getPlayersHand(3), playerControllerById.get(3), false);
 		}
 		if (nbOfPlayers > 3) {
-			drawForPlayer(model.getPlayersHand(4), playerControllerById.get(4));
+			drawForPlayer(model.getPlayersHand(4), playerControllerById.get(4), false);
 		}
 		if (nbOfPlayers > 4) {
-			drawForPlayer(model.getPlayersHand(5), playerControllerById.get(5));
+			drawForPlayer(model.getPlayersHand(5), playerControllerById.get(5), false);
 		}
 	}
 
 	private void resetPlayerZones(int nbOfPlayers) {
+		view.resetPlayerZone();
 		IntStream.rangeClosed(1, nbOfPlayers).forEach(playerId -> {
 			PlayerZoneView playerView = new PlayerZoneView("Player " + playerId);
 			PlayerHandViewController playerController = new PlayerHandViewController(playerView, playerId);
 			view.addPlayerZone(playerView);
 			playerControllerById.put(playerId, playerController);
 		});
+	}
+
+	@Override
+	public void update(HanabiState model) {
+		logger.log(Level.INFO, "update view!");
+		this.model = model;
+		initView(model);
 	}
 }

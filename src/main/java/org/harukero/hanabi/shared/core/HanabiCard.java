@@ -9,25 +9,63 @@ public class HanabiCard implements IsSerializable {
 	private Integer number;
 	private boolean colorKnown;
 	private boolean numberKnown;
+	private int itemId;
+	private String fullId;
 
 	@SuppressWarnings("unused")
 	private HanabiCard() {
-		this(Color.BLACK, 666);
 	}
 
-	public HanabiCard(Color color, Integer number) {
+	public HanabiCard(Color color, Integer number, int itemId) {
 		this.color = color;
 		this.number = number;
+		this.setItemId(itemId);
 		colorKnown = false;
 		numberKnown = true;
+		setCardFullId();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		HanabiCard other = (HanabiCard) obj;
+		if (fullId == null) {
+			if (other.fullId != null)
+				return false;
+		} else if (!fullId.equals(other.fullId))
+			return false;
+		return true;
+	}
+
+	public String getCardFullId() {
+		return fullId;
 	}
 
 	public Color getColor() {
 		return color;
 	}
 
+	public int getItemId() {
+		return itemId;
+	}
+
 	public Integer getNumber() {
 		return number;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (colorKnown ? 1231 : 1237);
+		result = prime * result + ((fullId == null) ? 0 : fullId.hashCode());
+		result = prime * result + (numberKnown ? 1231 : 1237);
+		return result;
 	}
 
 	public boolean inverseColorStatus() {
@@ -48,6 +86,10 @@ public class HanabiCard implements IsSerializable {
 		return numberKnown;
 	}
 
+	public void setCardFullId() {
+		fullId = color.getCssName() + "-" + number + "-" + itemId;
+	}
+
 	public void setColor(Color color) {
 		this.color = color;
 	}
@@ -56,12 +98,21 @@ public class HanabiCard implements IsSerializable {
 		this.colorKnown = colorKnown;
 	}
 
+	public void setItemId(int itemId) {
+		this.itemId = itemId;
+	}
+
 	public void setNumber(Integer number) {
 		this.number = number;
 	}
 
 	public void setNumberKnown(boolean numberKnown) {
 		this.numberKnown = numberKnown;
+	}
+
+	@Override
+	public String toString() {
+		return "HanabiCard [colorKnown=" + colorKnown + ", numberKnown=" + numberKnown + ", fullId=" + fullId + "]";
 	}
 
 }

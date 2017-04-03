@@ -15,21 +15,26 @@ import gwt.material.design.client.ui.MaterialLabel;
 
 public class HanabiCardView extends MaterialCard {
 
-	public static HanabiCardView createCardForColor(Color color, Integer rank) {
+	public static HanabiCardView createCardForColor(Color color, Integer rank, boolean isForViewPlayer) {
 		switch (color) {
 		case RED:
-			return new HanabiCardView(Color.WHITE, Color.RED, ViewUtils.CONSTANTS.color_red(), rank.toString());
+			return new HanabiCardView(Color.WHITE, Color.RED, ViewUtils.CONSTANTS.color_red(), rank.toString(),
+					isForViewPlayer);
 		case GREEN:
-			return new HanabiCardView(Color.WHITE, Color.GREEN, ViewUtils.CONSTANTS.color_green(), rank.toString());
+			return new HanabiCardView(Color.WHITE, Color.GREEN, ViewUtils.CONSTANTS.color_green(), rank.toString(),
+					isForViewPlayer);
 		case BLUE:
-			return new HanabiCardView(Color.WHITE, Color.BLUE, ViewUtils.CONSTANTS.color_blue(), rank.toString());
+			return new HanabiCardView(Color.WHITE, Color.BLUE, ViewUtils.CONSTANTS.color_blue(), rank.toString(),
+					isForViewPlayer);
 		case WHITE:
-			return new HanabiCardView(Color.BLACK, Color.WHITE, ViewUtils.CONSTANTS.color_white(), rank.toString());
+			return new HanabiCardView(Color.BLACK, Color.WHITE, ViewUtils.CONSTANTS.color_white(), rank.toString(),
+					isForViewPlayer);
 		case YELLOW:
-			return new HanabiCardView(Color.BLACK, Color.YELLOW, ViewUtils.CONSTANTS.color_yellow(), rank.toString());
+			return new HanabiCardView(Color.BLACK, Color.YELLOW, ViewUtils.CONSTANTS.color_yellow(), rank.toString(),
+					isForViewPlayer);
 		default:
 			return new HanabiCardView(Color.WHITE, Color.BLACK, ViewUtils.CONSTANTS.color_black(),
-					"EVERYTHING IS BLACK → THIS IS AN ERROR");
+					"EVERYTHING IS BLACK → THIS IS AN ERROR", isForViewPlayer);
 		}
 
 	}
@@ -40,12 +45,16 @@ public class HanabiCardView extends MaterialCard {
 	private String text;
 	private MaterialButton discardButton;
 	private MaterialButton playButton;
+	private boolean isForViewPlayer;
+	private MaterialButton rankInfoButton;
+	private MaterialButton colorInfoButton;
 
-	private HanabiCardView(Color textColor, Color backgroundColor, String title, String text) {
+	private HanabiCardView(Color textColor, Color backgroundColor, String title, String text, boolean isForViewPlayer) {
 		this.textColor = textColor;
 		this.backgroundColor = backgroundColor;
 		this.title = title;
 		this.text = text;
+		this.isForViewPlayer = isForViewPlayer;
 		MaterialCardTitle cardContentTitle = new MaterialCardTitle();
 		cardContentTitle.setText(title);
 		cardContentTitle.setTextColor(textColor);
@@ -57,22 +66,35 @@ public class HanabiCardView extends MaterialCard {
 		MaterialCardContent cardContent = new MaterialCardContent();
 		cardContent.add(cardContentTitle);
 		cardContent.add(cardContentLabel);
-
-		MaterialCardAction action = new MaterialCardAction();
-		playButton = new MaterialButton("PLAY");
-		playButton.addStyleName(ViewUtils.RESOURCES.style().cardButton());
-		playButton.setTextColor(Color.BLACK);
-		playButton.setTextAlign(TextAlign.RIGHT);
-		action.add(playButton);
-
-		discardButton = new MaterialButton("DISCARD");
-		discardButton.addStyleName(ViewUtils.RESOURCES.style().cardButton());
-		discardButton.setTextColor(Color.BLACK);
-		discardButton.setTextAlign(TextAlign.LEFT);
-		action.add(discardButton);
-
 		this.setBackgroundColor(backgroundColor);
 		this.add(cardContent);
+
+		MaterialCardAction action = new MaterialCardAction();
+		if (isForViewPlayer) {
+			playButton = new MaterialButton("PLAY");
+			playButton.addStyleName(ViewUtils.RESOURCES.style().cardButton());
+			playButton.setTextColor(Color.BLACK);
+			playButton.setTextAlign(TextAlign.RIGHT);
+			action.add(playButton);
+
+			discardButton = new MaterialButton("DISCARD");
+			discardButton.addStyleName(ViewUtils.RESOURCES.style().cardButton());
+			discardButton.setTextColor(Color.BLACK);
+			discardButton.setTextAlign(TextAlign.LEFT);
+			action.add(discardButton);
+		} else {
+			colorInfoButton = new MaterialButton("COLOR INFO");
+			colorInfoButton.addStyleName(ViewUtils.RESOURCES.style().cardButton());
+			colorInfoButton.setTextColor(Color.BLACK);
+			colorInfoButton.setTextAlign(TextAlign.RIGHT);
+			action.add(colorInfoButton);
+
+			rankInfoButton = new MaterialButton("RANK INFO");
+			rankInfoButton.addStyleName(ViewUtils.RESOURCES.style().cardButton());
+			rankInfoButton.setTextColor(Color.BLACK);
+			rankInfoButton.setTextAlign(TextAlign.LEFT);
+			action.add(rankInfoButton);
+		}
 		this.add(action);
 	}
 
@@ -92,12 +114,20 @@ public class HanabiCardView extends MaterialCard {
 		return title;
 	}
 
+	public HasClickHandlers getColorInfoButton() {
+		return colorInfoButton;
+	}
+
 	public HasClickHandlers getDiscardButton() {
 		return discardButton;
 	}
 
 	public HasClickHandlers getPlayButton() {
 		return playButton;
+	}
+
+	public HasClickHandlers getRankInfoButton() {
+		return rankInfoButton;
 	}
 
 	public void setCardBackgroundColor(Color backgroundColor) {

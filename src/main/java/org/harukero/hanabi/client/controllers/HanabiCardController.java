@@ -3,6 +3,7 @@ package org.harukero.hanabi.client.controllers;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.harukero.hanabi.client.application.IParent;
 import org.harukero.hanabi.client.rpc.HanabiAsyncCallback;
 import org.harukero.hanabi.client.rpc.HanabiStateUpdaterService;
 import org.harukero.hanabi.client.rpc.HanabiStateUpdaterServiceAsync;
@@ -25,8 +26,10 @@ public class HanabiCardController {
 	private HanabiCardView view;
 
 	private HanabiStateUpdaterServiceAsync updateState = GWT.create(HanabiStateUpdaterService.class);
+	private IParent parent;
 
-	public HanabiCardController(HanabiState model, HanabiCard cardModel, HanabiCardView view) {
+	public HanabiCardController(IParent parent, HanabiState model, HanabiCard cardModel, HanabiCardView view) {
+		this.parent = parent;
 		this.model = model;
 		this.cardModel = cardModel;
 		this.view = view;
@@ -34,31 +37,62 @@ public class HanabiCardController {
 	}
 
 	private void bind() {
+		bindDiscardButton();
+		bindPlayButton();
+		bindColorInfoButton();
+		bindRankInfoButton();
+	}
+
+	private void bindColorInfoButton() {
+		HasClickHandlers colorInfoButton = view.getColorInfoButton();
+		if (colorInfoButton != null) {
+			// bind it
+		}
+	}
+
+	private void bindDiscardButton() {
 		HasClickHandlers discardButton = view.getDiscardButton();
-		discardButton.addClickHandler(event -> {
-			AsyncCallback<HanabiState> callback = new HanabiAsyncCallback<HanabiState>() {
+		if (discardButton != null) {
+			discardButton.addClickHandler(event -> {
+				AsyncCallback<HanabiState> callback = new HanabiAsyncCallback<HanabiState>() {
 
-				@Override
-				public void onSuccess(HanabiState result) {
-					logger.log(Level.INFO, "Card discarded");
-					MaterialToast.fireToast("Card discarded");
-				}
-			};
+					@Override
+					public void onSuccess(HanabiState result) {
+						logger.log(Level.INFO, "Card discarded");
+						MaterialToast.fireToast("Card discarded");
+						parent.update(result);
+					}
+				};
 
-			updateState.updateHanabiState(createActionForDiscard(), model, callback);
-		});
+				updateState.updateHanabiState(createActionForDiscard(), model, callback);
+			});
+		}
+	}
+
+	private void bindPlayButton() {
 		HasClickHandlers playButton = view.getPlayButton();
-		playButton.addClickHandler(event -> {
-			AsyncCallback<HanabiState> callback = new HanabiAsyncCallback<HanabiState>() {
+		if (playButton != null) {
+			playButton.addClickHandler(event -> {
+				AsyncCallback<HanabiState> callback = new HanabiAsyncCallback<HanabiState>() {
 
-				@Override
-				public void onSuccess(HanabiState result) {
-					logger.log(Level.INFO, "Card played");
-					MaterialToast.fireToast("Card played");
-				}
-			};
-			updateState.updateHanabiState(createActionForPlay(), model, callback);
-		});
+					@Override
+					public void onSuccess(HanabiState result) {
+						logger.log(Level.INFO, "Card played");
+						MaterialToast.fireToast("Card played");
+						parent.update(result);
+					}
+				};
+				updateState.updateHanabiState(createActionForPlay(), model, callback);
+			});
+		}
+	}
+
+	private void bindRankInfoButton() {
+		HasClickHandlers rankInfoButton = view.getRankInfoButton();
+		if (rankInfoButton != null) {
+			// bind it
+		}
+
 	}
 
 	private HanabiAction createActionForDiscard() {
