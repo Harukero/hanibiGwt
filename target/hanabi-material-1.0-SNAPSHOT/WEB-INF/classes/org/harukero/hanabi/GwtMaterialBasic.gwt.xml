@@ -23,9 +23,13 @@
         "http://gwtproject.org/doctype/2.7.0/gwt-module.dtd">
 <module rename-to='GwtMaterialBasic'>
     <inherits name='com.google.gwt.user.User'/>
+    <inherits name="com.google.gwt.i18n.I18N"/>
     <inherits name="com.gwtplatform.mvp.MvpWithEntryPoint"/>
     <inherits name="com.google.gwt.logging.Logging"/>
-
+	<inherits name="com.google.gwt.i18n.CldrLocales"/>
+	
+    <extend-property name="locale" values="ja"/>
+    <extend-property name="locale" values="fr"/>
     <extend-configuration-property name="gin.ginjector.modules"
                                    value="org.harukero.hanabi.client.gin.ClientModule"/>
 

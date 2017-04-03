@@ -34,11 +34,9 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewImpl;
 
-import gwt.material.design.client.ui.MaterialCard;
 import gwt.material.design.client.ui.MaterialCollapsible;
 import gwt.material.design.client.ui.MaterialCollapsibleBody;
 import gwt.material.design.client.ui.MaterialColumn;
-import gwt.material.design.client.ui.MaterialPanel;
 import gwt.material.design.client.ui.MaterialRow;
 
 public class ApplicationView extends ViewImpl implements ApplicationPresenter.MyView {
@@ -47,9 +45,6 @@ public class ApplicationView extends ViewImpl implements ApplicationPresenter.My
 
 	private Map<MaterialCollapsibleBody, MaterialRow> handsByPlayers;
 	private Map<MaterialRow, List<Widget>> cardsInHands;
-
-	@UiField
-	MaterialPanel panelPlayers;
 
 	@UiField
 	MaterialCollapsible playerZones;
@@ -71,25 +66,24 @@ public class ApplicationView extends ViewImpl implements ApplicationPresenter.My
 		}
 		playerZone.setVisible(true);
 		materialRow = handsByPlayers.get(playerZone.getPlayerBody());
-		int size = cardsInHands.get(materialRow).size();
-		if (size < 5) {
+		MaterialColumn column = new MaterialColumn();
+		column.setGrid("s2");
+		column.add(hanabiCardView);
 
-			MaterialCard card = hanabiCardView;
-
-			MaterialColumn column = new MaterialColumn();
-			column.setGrid("s2");
-			column.add(card);
-
-			// MaterialDnd.draggable(card);
-
-			materialRow.add(column);
-			cardsInHands.get(materialRow).add(card);
-		}
+		materialRow.add(column);
+		cardsInHands.get(materialRow).add(hanabiCardView);
 	}
 
 	@Override
 	public void addPlayerZone(PlayerZoneView playerZone) {
 		playerZones.add(playerZone);
+	}
+
+	@Override
+	public void resetPlayerZone() {
+		playerZones.clear();
+		handsByPlayers.clear();
+		cardsInHands.clear();
 	}
 
 }

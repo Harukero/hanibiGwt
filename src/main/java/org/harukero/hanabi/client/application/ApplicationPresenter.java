@@ -28,8 +28,8 @@ import org.harukero.hanabi.client.controllers.HanabiCardController;
 import org.harukero.hanabi.client.controllers.PlayerHandViewController;
 import org.harukero.hanabi.client.views.HanabiCardView;
 import org.harukero.hanabi.client.views.PlayerZoneView;
-import org.harukero.hanabi.shared.HanabiCard;
-import org.harukero.hanabi.shared.HanabiState;
+import org.harukero.hanabi.shared.core.HanabiCard;
+import org.harukero.hanabi.shared.core.HanabiState;
 
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
@@ -50,6 +50,8 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
 		void addCardForWidgetIfPossible(PlayerZoneView playerZone, HanabiCardView cardView);
 
 		void addPlayerZone(PlayerZoneView playerZone);
+
+		void resetPlayerZone();
 
 	}
 
@@ -81,12 +83,7 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
 
 	private void initView() {
 		int nbOfPlayers = model.getNbOfPlayers();
-		IntStream.rangeClosed(1, nbOfPlayers).forEach(playerId -> {
-			PlayerZoneView playerView = new PlayerZoneView("Player " + playerId);
-			PlayerHandViewController playerController = new PlayerHandViewController(playerView);
-			view.addPlayerZone(playerView);
-			playerControllerById.put(playerId, playerController);
-		});
+		resetPlayerZones(nbOfPlayers);
 		drawForPlayer(model.getPlayersHand(1), playerControllerById.get(1));
 		drawForPlayer(model.getPlayersHand(2), playerControllerById.get(2));
 
@@ -99,5 +96,14 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
 		if (nbOfPlayers > 4) {
 			drawForPlayer(model.getPlayersHand(5), playerControllerById.get(5));
 		}
+	}
+
+	private void resetPlayerZones(int nbOfPlayers) {
+		IntStream.rangeClosed(1, nbOfPlayers).forEach(playerId -> {
+			PlayerZoneView playerView = new PlayerZoneView("Player " + playerId);
+			PlayerHandViewController playerController = new PlayerHandViewController(playerView, playerId);
+			view.addPlayerZone(playerView);
+			playerControllerById.put(playerId, playerController);
+		});
 	}
 }

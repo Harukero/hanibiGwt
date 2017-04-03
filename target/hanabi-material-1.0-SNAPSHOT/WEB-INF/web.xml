@@ -27,4 +27,15 @@
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
+    
+	<!-- Servlets -->
+	<servlet>
+	  <servlet-name>hanabiStateUpdaterServiceImpl</servlet-name>
+	  <servlet-class>org.harukero.hanabi.server.rpc.HanabiStateUpdaterServiceImpl</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+	  <servlet-name>hanabiStateUpdaterServiceImpl</servlet-name>
+	  <url-pattern>/GwtMaterialBasic/hanabiStateUpdate</url-pattern>
+	</servlet-mapping>
 </web-app>

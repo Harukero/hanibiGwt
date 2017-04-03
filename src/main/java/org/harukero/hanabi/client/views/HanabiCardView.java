@@ -18,17 +18,18 @@ public class HanabiCardView extends MaterialCard {
 	public static HanabiCardView createCardForColor(Color color, Integer rank) {
 		switch (color) {
 		case RED:
-			return new HanabiCardView(Color.WHITE, Color.RED, "RED", rank.toString());
+			return new HanabiCardView(Color.WHITE, Color.RED, ViewUtils.CONSTANTS.color_red(), rank.toString());
 		case GREEN:
-			return new HanabiCardView(Color.WHITE, Color.GREEN, "GREEN", rank.toString());
+			return new HanabiCardView(Color.WHITE, Color.GREEN, ViewUtils.CONSTANTS.color_green(), rank.toString());
 		case BLUE:
-			return new HanabiCardView(Color.WHITE, Color.BLUE, "BLUE", rank.toString());
+			return new HanabiCardView(Color.WHITE, Color.BLUE, ViewUtils.CONSTANTS.color_blue(), rank.toString());
 		case WHITE:
-			return new HanabiCardView(Color.BLACK, Color.WHITE, "WHITE", rank.toString());
+			return new HanabiCardView(Color.BLACK, Color.WHITE, ViewUtils.CONSTANTS.color_white(), rank.toString());
 		case YELLOW:
-			return new HanabiCardView(Color.BLACK, Color.YELLOW, "YELLOW", rank.toString());
+			return new HanabiCardView(Color.BLACK, Color.YELLOW, ViewUtils.CONSTANTS.color_yellow(), rank.toString());
 		default:
-			return new HanabiCardView(Color.WHITE, Color.BLACK, "BLACK", "EVERYTHING IS BLACK → THIS IS AN ERROR");
+			return new HanabiCardView(Color.WHITE, Color.BLACK, ViewUtils.CONSTANTS.color_black(),
+					"EVERYTHING IS BLACK → THIS IS AN ERROR");
 		}
 
 	}
