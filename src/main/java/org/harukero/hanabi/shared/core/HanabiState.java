@@ -5,9 +5,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.IntStream;
+
+import javax.validation.constraints.NotNull;
 
 import org.harukero.hanabi.shared.utils.SharedUtils;
 
@@ -16,7 +16,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 import gwt.material.design.client.constants.Color;
 
 public class HanabiState implements IsSerializable {
-	private static final Logger logger = Logger.getLogger("HanabiLogger");
+	// private static final Logger logger = Logger.getLogger("HanabiLogger");
 
 	private List<HanabiCard> deck;
 	private Map<Color, List<HanabiCard>> cardsByColor;
@@ -134,7 +134,7 @@ public class HanabiState implements IsSerializable {
 	}
 
 	private void initCardsByPlayers(int cardsToDraw) {
-		assert (deck != null && !deck.isEmpty());
+		assert deck != null && !deck.isEmpty();
 		cardsByPlayers = new HashMap<>();
 		IntStream.rangeClosed(1, nbOfPlayers).forEach(playerId -> {
 			cardsByPlayers.put(playerId, new ArrayList<>());
@@ -155,13 +155,28 @@ public class HanabiState implements IsSerializable {
 
 	public HanabiActionStatus playCard(HanabiCard cardImpacted, int playerId) {
 		boolean success = cardsByPlayers.get(playerId).remove(cardImpacted);
-		logger.log(Level.INFO, "trying to remove " + cardImpacted + " is it a success? " + success);
 		if (!success) {
 			return HanabiActionStatus.ERROR;
 		}
-		this.cardsByColor.get(cardImpacted.getColor()).add(cardImpacted);
+		success = checkIfCardCanBePlayed(cardImpacted);
+		if (!success) {
+			return HanabiActionStatus.LIFE_LOST;
+		}
+		cardsByColor.get(cardImpacted.getColor()).add(cardImpacted);
 		cardImpacted.setOwner(0);
 		return HanabiActionStatus.SUCCESS;
+	}
+
+	private boolean checkIfCardCanBePlayed(@NotNull HanabiCard cardImpacted) {
+		List<HanabiCard> cardsForCurrentColor = cardsByColor.get(cardImpacted.getColor());
+		if (cardsForCurrentColor.isEmpty()) {
+			return cardImpacted.getNumber() == 1;
+		}
+		HanabiCard lastCardPlayed = cardsForCurrentColor.get(cardsForCurrentColor.size() - 1);
+		if (lastCardPlayed == null) {
+			throw new IllegalStateException("last card played is null, but it shouldn't");
+		}
+		return cardImpacted.getNumber() - lastCardPlayed.getNumber() == 1;
 	}
 
 	public int removeInfoToken() {
@@ -173,9 +188,9 @@ public class HanabiState implements IsSerializable {
 
 	public int removeLifeToken() {
 		if (lifeTokens > 0) {
-			infoTokens--;
+			lifeTokens--;
 		}
-		return infoTokens;
+		return lifeTokens;
 	}
 
 	public void setCardsByColor(Map<Color, List<HanabiCard>> cardsByColor) {
@@ -191,7 +206,7 @@ public class HanabiState implements IsSerializable {
 	}
 
 	public void setInfoLeft(int infoLeft) {
-		this.infoTokens = infoLeft;
+		infoTokens = infoLeft;
 	}
 
 	public void setLifeTokens(int lifeTokens) {

@@ -41,11 +41,11 @@ public class HanabiStateUpdaterServiceImpl extends RemoteServiceServlet implemen
 	}
 
 	private void applyPlay(HanabiAction action, HanabiState state) throws Exception {
-		HanabiActionStatus discardCardSuccess = state.playCard(action.getCardImpacted(), action.getPlayerId());
-		if (discardCardSuccess == HanabiActionStatus.ERROR) {
+		HanabiActionStatus playCardSuccess = state.playCard(action.getCardImpacted(), action.getPlayerId());
+		if (playCardSuccess == HanabiActionStatus.ERROR) {
 			throw new Exception("Impossible to play card " + action.getCardImpacted());
 		}
-		if (discardCardSuccess == HanabiActionStatus.LIFE_LOST) {
+		if (playCardSuccess == HanabiActionStatus.LIFE_LOST) {
 			state.removeLifeToken();
 		}
 		state.drawCard(action.getPlayerId());

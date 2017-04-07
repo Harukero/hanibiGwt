@@ -58,6 +58,7 @@ public class CardZoneView extends MaterialColumn {
 
 	public CardZoneView addNewCardItem(int number) {
 		MaterialCollectionItem item = new MaterialCollectionItem();
+		item.setTextColor(Color.BLACK);
 		item.add(new MaterialLabel("card number " + number));
 		cardCollection.add(item);
 		return this;

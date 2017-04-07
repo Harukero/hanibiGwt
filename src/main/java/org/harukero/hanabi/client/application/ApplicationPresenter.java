@@ -22,6 +22,8 @@ package org.harukero.hanabi.client.application;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.IntStream;
 
 import org.harukero.hanabi.client.controllers.CardZonesController;
@@ -85,7 +87,7 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
 
 	}
 
-	// private static final Logger logger = Logger.getLogger("HanabiLogger");
+	private static final Logger logger = Logger.getLogger("HanabiLogger");
 
 	public static final NestedSlot SLOT_MAIN = new NestedSlot();
 
@@ -133,18 +135,8 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
 	private void initView(HanabiState model) {
 		int nbOfPlayers = model.getNbOfPlayers();
 		resetPlayerZones(nbOfPlayers);
-		drawForPlayer(model.getPlayersHand(1), playerControllerById.get(1), true);
-		drawForPlayer(model.getPlayersHand(2), playerControllerById.get(2), false);
-
-		if (nbOfPlayers > 2) {
-			drawForPlayer(model.getPlayersHand(3), playerControllerById.get(3), false);
-		}
-		if (nbOfPlayers > 3) {
-			drawForPlayer(model.getPlayersHand(4), playerControllerById.get(4), false);
-		}
-		if (nbOfPlayers > 4) {
-			drawForPlayer(model.getPlayersHand(5), playerControllerById.get(5), false);
-		}
+		IntStream.rangeClosed(1, nbOfPlayers).forEach(playerId -> drawForPlayer(model.getPlayersHand(playerId),
+				playerControllerById.get(playerId), playerId == 1));
 		updateNewsFeed(model);
 		updateLifeAndInfos(model);
 		updateCardsZones(model);
@@ -153,7 +145,10 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
 	private void updateCardsZones(HanabiState model) {
 		zones.clear();
 		Map<Color, List<HanabiCard>> cardsByColor = model.getCardsByColor();
-		cardsByColor.forEach((color, cards) -> cards.stream().forEach(card -> zones.addNewCard(card)));
+		cardsByColor.forEach((color, cards) -> cards.stream().forEach(card -> {
+			logger.log(Level.INFO, "trying to add card " + card + " for color " + color);
+			zones.addNewCard(card);
+		}));
 	}
 
 	private void notImplementedYet() {

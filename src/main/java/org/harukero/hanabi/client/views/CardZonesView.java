@@ -56,7 +56,6 @@ public class CardZonesView extends MaterialRow {
 		for (Color color : zoneByColor.keySet()) {
 			zoneByColor.get(color).clearCollection();
 		}
-		zoneByColor.clear();
 	}
 
 }
