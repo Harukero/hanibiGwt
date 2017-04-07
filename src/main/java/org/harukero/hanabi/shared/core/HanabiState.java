@@ -1,6 +1,7 @@
 package org.harukero.hanabi.shared.core;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,9 @@ public class HanabiState implements IsSerializable {
 	private int nbOfPlayers;
 
 	private Map<Integer, List<HanabiCard>> cardsByPlayers;
+	private List<HanabiAction> actionsDone = new ArrayList<>();
+	private int infoTokens = 8;
+	private int lifeTokens = 3;
 
 	public HanabiState() {
 		this(5); // default is 5 players
@@ -46,8 +50,20 @@ public class HanabiState implements IsSerializable {
 		initCardsByPlayers(nbOfPlayers > 3 ? 4 : 5);
 	}
 
+	public void addAction(HanabiAction action) {
+		actionsDone.add(action);
+	}
+
+	public int addInfoToken() {
+		if (infoTokens < 8) {
+			infoTokens++;
+		}
+		return infoTokens;
+	}
+
 	public HanabiActionStatus discardCard(HanabiCard cardImpacted, int playerId) {
 		boolean success = cardsByPlayers.get(playerId).remove(cardImpacted);
+		addInfoToken();
 		return success ? HanabiActionStatus.SUCCESS : HanabiActionStatus.ERROR;
 	}
 
@@ -66,8 +82,16 @@ public class HanabiState implements IsSerializable {
 	public void drawCard(int playerId) {
 		HanabiCard card = drawCard();
 		if (card != null) {
+			card.setOwner(playerId);
 			cardsByPlayers.get(playerId).add(card);
 		}
+	}
+
+	public List<HanabiAction> getActionsDone() {
+		List<HanabiAction> reverseActions = new ArrayList<>();
+		reverseActions.addAll(actionsDone);
+		Collections.reverse(reverseActions);
+		return reverseActions;
 	}
 
 	public Map<Color, List<HanabiCard>> getCardsByColor() {
@@ -82,6 +106,14 @@ public class HanabiState implements IsSerializable {
 		return deck;
 	}
 
+	public int getInfoLeft() {
+		return infoTokens;
+	}
+
+	public int getLifeTokens() {
+		return lifeTokens;
+	}
+
 	public int getNbOfPlayers() {
 		return nbOfPlayers;
 	}
@@ -90,9 +122,10 @@ public class HanabiState implements IsSerializable {
 		if (!cardsByPlayers.containsKey(playerId)) {
 			throw new IllegalStateException("This player doesn't exist");
 		}
-		List<HanabiCard> cards = new ArrayList<>();
-		cards.addAll(cardsByPlayers.get(playerId));
-		return cards;
+		for (HanabiCard hanabiCard : cardsByPlayers.get(playerId)) {
+			hanabiCard.setOwner(playerId);
+		}
+		return cardsByPlayers.get(playerId);
 	}
 
 	private void initCardsByColor() {
@@ -127,7 +160,22 @@ public class HanabiState implements IsSerializable {
 			return HanabiActionStatus.ERROR;
 		}
 		this.cardsByColor.get(cardImpacted.getColor()).add(cardImpacted);
+		cardImpacted.setOwner(0);
 		return HanabiActionStatus.SUCCESS;
+	}
+
+	public int removeInfoToken() {
+		if (infoTokens > 0) {
+			infoTokens--;
+		}
+		return infoTokens;
+	}
+
+	public int removeLifeToken() {
+		if (lifeTokens > 0) {
+			infoTokens--;
+		}
+		return infoTokens;
 	}
 
 	public void setCardsByColor(Map<Color, List<HanabiCard>> cardsByColor) {
@@ -142,8 +190,12 @@ public class HanabiState implements IsSerializable {
 		this.deck = deck;
 	}
 
-	public void setNbOfPlayers(int nbOfPlayers) {
-		this.nbOfPlayers = nbOfPlayers;
+	public void setInfoLeft(int infoLeft) {
+		this.infoTokens = infoLeft;
+	}
+
+	public void setLifeTokens(int lifeTokens) {
+		this.lifeTokens = lifeTokens;
 	}
 
 }

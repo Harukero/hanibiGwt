@@ -26,7 +26,10 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.harukero.hanabi.client.views.CardZonesView;
+import org.harukero.hanabi.client.views.HanabiActionView;
 import org.harukero.hanabi.client.views.HanabiCardView;
+import org.harukero.hanabi.client.views.LifeAndInfosTokenContainerView;
 import org.harukero.hanabi.client.views.PlayerZoneView;
 
 import com.google.gwt.uibinder.client.UiBinder;
@@ -37,6 +40,8 @@ import com.gwtplatform.mvp.client.ViewImpl;
 import gwt.material.design.client.ui.MaterialCollapsible;
 import gwt.material.design.client.ui.MaterialCollapsibleBody;
 import gwt.material.design.client.ui.MaterialColumn;
+import gwt.material.design.client.ui.MaterialLink;
+import gwt.material.design.client.ui.MaterialPanel;
 import gwt.material.design.client.ui.MaterialRow;
 
 public class ApplicationView extends ViewImpl implements ApplicationPresenter.MyView {
@@ -49,11 +54,27 @@ public class ApplicationView extends ViewImpl implements ApplicationPresenter.My
 	@UiField
 	MaterialCollapsible playerZones;
 
+	@UiField
+	MaterialPanel mainPanel, cardZones;
+
+	@UiField
+	MaterialPanel actionFieldAside;
+
+	@UiField
+	MaterialPanel lifePointsAndInfos;
+
+	@UiField
+	MaterialLink two_players_game, three_players_game, four_players_game, five_players_game, rules;
+
+	private LifeAndInfosTokenContainerView lifesAndInfos;
+
 	@Inject
 	ApplicationView(Binder uiBinder) {
 		initWidget(uiBinder.createAndBindUi(this));
 		handsByPlayers = new HashMap<>();
 		cardsInHands = new HashMap<>();
+		lifesAndInfos = new LifeAndInfosTokenContainerView();
+		lifePointsAndInfos.add(lifesAndInfos);
 	}
 
 	@Override
@@ -67,16 +88,68 @@ public class ApplicationView extends ViewImpl implements ApplicationPresenter.My
 		playerZone.setVisible(true);
 		materialRow = handsByPlayers.get(playerZone.getPlayerBody());
 		MaterialColumn column = new MaterialColumn();
-		column.setGrid("s2");
+		column.setGrid("s3");
 		column.add(hanabiCardView);
 
 		materialRow.add(column);
 		cardsInHands.get(materialRow).add(hanabiCardView);
+
+	}
+
+	@Override
+	public void addNewActionInfo(HanabiActionView action) {
+		actionFieldAside.add(action);
 	}
 
 	@Override
 	public void addPlayerZone(PlayerZoneView playerZone) {
 		playerZones.add(playerZone);
+	}
+
+	@Override
+	public void setCardsZones(CardZonesView zones) {
+		cardZones.add(zones);
+	}
+
+	@Override
+	public MaterialLink getFive_players_game() {
+		return five_players_game;
+	}
+
+	@Override
+	public MaterialLink getFour_players_game() {
+		return four_players_game;
+	}
+
+	@Override
+	public LifeAndInfosTokenContainerView getLifeAndInfos() {
+		return lifesAndInfos;
+	}
+
+	@Override
+	public MaterialLink getRules() {
+		return rules;
+	}
+
+	@Override
+	public MaterialLink getThree_players_game() {
+		return three_players_game;
+	}
+
+	@Override
+	public MaterialLink getTwo_players_game() {
+		return two_players_game;
+	}
+
+	@Override
+	public void hideAll() {
+		mainPanel.setVisible(false);
+		actionFieldAside.setVisible(false);
+	}
+
+	@Override
+	public void resetAside() {
+		actionFieldAside.clear();
 	}
 
 	@Override
@@ -86,4 +159,9 @@ public class ApplicationView extends ViewImpl implements ApplicationPresenter.My
 		cardsInHands.clear();
 	}
 
+	@Override
+	public void showView() {
+		mainPanel.setVisible(true);
+		actionFieldAside.setVisible(true);
+	}
 }

@@ -4,9 +4,12 @@ import org.harukero.hanabi.client.rpc.HanabiStateUpdaterService;
 import org.harukero.hanabi.shared.core.HanabiAction;
 import org.harukero.hanabi.shared.core.HanabiActionStatus;
 import org.harukero.hanabi.shared.core.HanabiActionType;
+import org.harukero.hanabi.shared.core.HanabiCard;
 import org.harukero.hanabi.shared.core.HanabiState;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
+import gwt.material.design.client.constants.Color;
 
 public class HanabiStateUpdaterServiceImpl extends RemoteServiceServlet implements HanabiStateUpdaterService {
 
@@ -24,8 +27,17 @@ public class HanabiStateUpdaterServiceImpl extends RemoteServiceServlet implemen
 	}
 
 	private void applyInformation(HanabiAction action, HanabiState state) {
-		// TODO Auto-generated method stub
-
+		state.removeInfoToken();
+		int playerId = action.getPlayerId();
+		Color color = action.getColorForInfo();
+		int rank = action.getRankForInfo();
+		for (HanabiCard card : state.getPlayersHand(playerId)) {
+			if (card.getColor() == color) {
+				card.setColorKnown(true);
+			} else if (card.getNumber() == rank) {
+				card.setColorKnown(true);
+			}
+		}
 	}
 
 	private void applyPlay(HanabiAction action, HanabiState state) throws Exception {
@@ -34,7 +46,7 @@ public class HanabiStateUpdaterServiceImpl extends RemoteServiceServlet implemen
 			throw new Exception("Impossible to play card " + action.getCardImpacted());
 		}
 		if (discardCardSuccess == HanabiActionStatus.LIFE_LOST) {
-
+			state.removeLifeToken();
 		}
 		state.drawCard(action.getPlayerId());
 	}
@@ -48,6 +60,7 @@ public class HanabiStateUpdaterServiceImpl extends RemoteServiceServlet implemen
 		} else if (action.getActionType() == HanabiActionType.INFORMATION) {
 			applyInformation(action, state);
 		}
+		state.addAction(action);
 		return state;
 	}
 

@@ -9,3 +9,20 @@ body {
 .cardButton {
 	margin: 4px;
 }
+
+.hanabiChip {
+	margin: 5px;
+}
+
+#actionFieldAside {
+    float: right;
+    width: 15%;
+/*     background-color: white; */
+    overflow: auto;
+    height: inherit;
+}
+
+#mainPanel {
+	float: left;
+	width: 80%;
+}

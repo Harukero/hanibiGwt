@@ -15,6 +15,10 @@ import gwt.material.design.client.ui.MaterialLabel;
 
 public class HanabiCardView extends MaterialCard {
 
+	private static final Color basicTextColor = Color.WHITE;
+
+	private static final Color basicBackgroundColor = Color.BLACK;
+
 	public static HanabiCardView createCardForColor(Color color, Integer rank, boolean isForViewPlayer) {
 		switch (color) {
 		case RED:
@@ -61,12 +65,12 @@ public class HanabiCardView extends MaterialCard {
 
 		MaterialLabel cardContentLabel = new MaterialLabel(text);
 		cardContentLabel.addStyleName(ViewUtils.RESOURCES.style().fontSize14());
-		cardContentLabel.setTextColor(textColor);
+		cardContentLabel.setTextColor(isForViewPlayer ? basicTextColor : textColor);
 
 		MaterialCardContent cardContent = new MaterialCardContent();
 		cardContent.add(cardContentTitle);
 		cardContent.add(cardContentLabel);
-		this.setBackgroundColor(backgroundColor);
+		this.setBackgroundColor(isForViewPlayer ? basicBackgroundColor : backgroundColor);
 		this.add(cardContent);
 
 		MaterialCardAction action = new MaterialCardAction();
@@ -128,6 +132,10 @@ public class HanabiCardView extends MaterialCard {
 
 	public HasClickHandlers getRankInfoButton() {
 		return rankInfoButton;
+	}
+
+	public boolean isForViewPlayer() {
+		return isForViewPlayer;
 	}
 
 	public void setCardBackgroundColor(Color backgroundColor) {

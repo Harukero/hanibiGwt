@@ -11,6 +11,7 @@ public class HanabiCard implements IsSerializable {
 	private boolean numberKnown;
 	private int itemId;
 	private String fullId;
+	private int owner;
 
 	@SuppressWarnings("unused")
 	private HanabiCard() {
@@ -56,6 +57,10 @@ public class HanabiCard implements IsSerializable {
 
 	public Integer getNumber() {
 		return number;
+	}
+
+	public int getOwner() {
+		return owner;
 	}
 
 	@Override
@@ -108,6 +113,10 @@ public class HanabiCard implements IsSerializable {
 
 	public void setNumberKnown(boolean numberKnown) {
 		this.numberKnown = numberKnown;
+	}
+
+	public void setOwner(int owner) {
+		this.owner = owner;
 	}
 
 	@Override

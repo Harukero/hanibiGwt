@@ -1,13 +1,11 @@
 package org.harukero.hanabi.client.controllers;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.harukero.hanabi.client.application.IParent;
 import org.harukero.hanabi.client.rpc.HanabiAsyncCallback;
 import org.harukero.hanabi.client.rpc.HanabiStateUpdaterService;
 import org.harukero.hanabi.client.rpc.HanabiStateUpdaterServiceAsync;
 import org.harukero.hanabi.client.views.HanabiCardView;
+import org.harukero.hanabi.client.views.HanabiModal;
 import org.harukero.hanabi.shared.core.HanabiAction;
 import org.harukero.hanabi.shared.core.HanabiActionBuilder;
 import org.harukero.hanabi.shared.core.HanabiCard;
@@ -17,10 +15,8 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-import gwt.material.design.client.ui.MaterialToast;
-
 public class HanabiCardController {
-	private static final Logger logger = Logger.getLogger("HanabiLogger");
+	// private static final Logger logger = Logger.getLogger("HanabiLogger");
 	private HanabiState model;
 	private HanabiCard cardModel;
 	private HanabiCardView view;
@@ -39,15 +35,8 @@ public class HanabiCardController {
 	private void bind() {
 		bindDiscardButton();
 		bindPlayButton();
-		bindColorInfoButton();
-		bindRankInfoButton();
-	}
-
-	private void bindColorInfoButton() {
-		HasClickHandlers colorInfoButton = view.getColorInfoButton();
-		if (colorInfoButton != null) {
-			// bind it
-		}
+		bindInfoColorButton();
+		bindInfoRankButton();
 	}
 
 	private void bindDiscardButton() {
@@ -58,8 +47,8 @@ public class HanabiCardController {
 
 					@Override
 					public void onSuccess(HanabiState result) {
-						logger.log(Level.INFO, "Card discarded");
-						MaterialToast.fireToast("Card discarded");
+						// logger.log(Level.INFO, "Card discarded");
+						// MaterialToast.fireToast("Card discarded");
 						parent.update(result);
 					}
 				};
@@ -67,6 +56,52 @@ public class HanabiCardController {
 				updateState.updateHanabiState(createActionForDiscard(), model, callback);
 			});
 		}
+	}
+
+	private void bindInfoColorButton() {
+		HasClickHandlers infoColorButton = view.getColorInfoButton();
+		if (infoColorButton != null) {
+			infoColorButton.addClickHandler(event -> {
+				if (model.getInfoLeft() > 0) {
+					AsyncCallback<HanabiState> callback = new HanabiAsyncCallback<HanabiState>() {
+
+						@Override
+						public void onSuccess(HanabiState result) {
+							// logger.log(Level.INFO, "Card played");
+							// MaterialToast.fireToast("Card played");
+							parent.update(result);
+						}
+					};
+					updateState.updateHanabiState(createActionForInfoColor(), model, callback);
+				} else {
+					HanabiModal.openModal("Sorry", "You don't have information token remaining");
+				}
+			});
+
+		}
+	}
+
+	private void bindInfoRankButton() {
+		HasClickHandlers infoRankButton = view.getRankInfoButton();
+		if (infoRankButton != null) {
+			infoRankButton.addClickHandler(event -> {
+				if (model.getInfoLeft() > 0) {
+					AsyncCallback<HanabiState> callback = new HanabiAsyncCallback<HanabiState>() {
+
+						@Override
+						public void onSuccess(HanabiState result) {
+							// logger.log(Level.INFO, "Card played");
+							// MaterialToast.fireToast("Card played");
+							parent.update(result);
+						}
+					};
+					updateState.updateHanabiState(createActionForInfoRank(), model, callback);
+				} else {
+					HanabiModal.openModal("Sorry", "You don't have information token remaining");
+				}
+			});
+		}
+
 	}
 
 	private void bindPlayButton() {
@@ -77,8 +112,8 @@ public class HanabiCardController {
 
 					@Override
 					public void onSuccess(HanabiState result) {
-						logger.log(Level.INFO, "Card played");
-						MaterialToast.fireToast("Card played");
+						// logger.log(Level.INFO, "Card played");
+						// MaterialToast.fireToast("Card played");
 						parent.update(result);
 					}
 				};
@@ -87,20 +122,24 @@ public class HanabiCardController {
 		}
 	}
 
-	private void bindRankInfoButton() {
-		HasClickHandlers rankInfoButton = view.getRankInfoButton();
-		if (rankInfoButton != null) {
-			// bind it
-		}
-
+	private HanabiAction createActionForDiscard() {
+		return HanabiActionBuilder.createDiscardAction(cardModel, cardModel.getOwner());
 	}
 
-	private HanabiAction createActionForDiscard() {
-		return HanabiActionBuilder.createDiscardAction(cardModel, 1);
+	private HanabiAction createActionForInfoColor() {
+		return HanabiActionBuilder.createInfoColorAction(cardModel.getColor(), cardModel.getOwner());
+	}
+
+	private HanabiAction createActionForInfoRank() {
+		return HanabiActionBuilder.createInfoRankAction(cardModel.getNumber(), cardModel.getOwner());
 	}
 
 	private HanabiAction createActionForPlay() {
-		return HanabiActionBuilder.createPlayAction(cardModel, 1);
+		return HanabiActionBuilder.createPlayAction(cardModel, cardModel.getOwner());
+	}
+
+	public HanabiCardView getView() {
+		return view;
 	}
 
 }

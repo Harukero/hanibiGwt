@@ -27,9 +27,13 @@ public interface AppResources extends ClientBundle {
 	}
 
 	interface Style extends CssResource {
+
 		String cardButton();
 
 		String fontSize14();
+
+		String hanabiChip();
+
 	}
 
 	@Source("css/normalize.gss")
