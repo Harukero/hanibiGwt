@@ -30,6 +30,12 @@ public class HanabiCardController {
 		this.cardModel = cardModel;
 		this.view = view;
 		bind();
+		if (cardModel.isColorKnown()) {
+			showCardColor();
+		}
+		if (cardModel.isRankKnown()) {
+			showCardRank();
+		}
 	}
 
 	private void bind() {
@@ -131,7 +137,7 @@ public class HanabiCardController {
 	}
 
 	private HanabiAction createActionForInfoRank() {
-		return HanabiActionBuilder.createInfoRankAction(cardModel.getNumber(), cardModel.getOwner());
+		return HanabiActionBuilder.createInfoRankAction(cardModel.getRank(), cardModel.getOwner());
 	}
 
 	private HanabiAction createActionForPlay() {
@@ -142,4 +148,11 @@ public class HanabiCardController {
 		return view;
 	}
 
+	public void showCardRank() {
+		view.showCardRank();
+	}
+
+	public void showCardColor() {
+		view.showCardColor();
+	}
 }

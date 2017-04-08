@@ -21,13 +21,13 @@ public class HanabiActionView extends MaterialPanel {
 		chip.setIconType(IconType.CLOSE);
 		switch (action.getActionType()) {
 		case DISCARD:
-			chip.setText(action.getCardImpacted().getColor() + " " + action.getCardImpacted().getNumber());
+			chip.setText(action.getCardImpacted().getColor() + " " + action.getCardImpacted().getRank());
 			chip.setLetter("D");
 			chip.setLetterColor(Color.WHITE);
 			chip.setLetterBackgroundColor(Color.RED);
 			break;
 		case PLAY:
-			chip.setText(action.getCardImpacted().getColor() + " " + action.getCardImpacted().getNumber());
+			chip.setText(action.getCardImpacted().getColor() + " " + action.getCardImpacted().getRank());
 			chip.setLetter("P");
 			chip.setLetterColor(Color.WHITE);
 			chip.setLetterBackgroundColor(Color.GREEN);

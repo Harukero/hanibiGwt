@@ -9,5 +9,5 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("hanabiStateUpdate")
 public interface HanabiStateUpdaterService extends RemoteService {
 
-	HanabiState updateHanabiState(HanabiAction action, HanabiState state) throws Exception;
+	HanabiState updateHanabiState(HanabiAction action, HanabiState state);
 }

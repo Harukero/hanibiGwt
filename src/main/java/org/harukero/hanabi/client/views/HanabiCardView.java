@@ -15,9 +15,7 @@ import gwt.material.design.client.ui.MaterialLabel;
 
 public class HanabiCardView extends MaterialCard {
 
-	private static final Color basicTextColor = Color.WHITE;
-
-	private static final Color basicBackgroundColor = Color.BLACK;
+	private static final Color unknownInfoColor = Color.BLACK;
 
 	public static HanabiCardView createCardForColor(Color color, Integer rank, boolean isForViewPlayer) {
 		switch (color) {
@@ -45,32 +43,34 @@ public class HanabiCardView extends MaterialCard {
 
 	private Color textColor;
 	private Color backgroundColor;
-	private String title;
-	private String text;
+	private String cardColor;
+	private String cardRank;
 	private MaterialButton discardButton;
 	private MaterialButton playButton;
 	private boolean isForViewPlayer;
 	private MaterialButton rankInfoButton;
 	private MaterialButton colorInfoButton;
+	private boolean cardColorDisplayed;
+	private boolean cardRankDisplayed;
+	private MaterialCardTitle cardColorContainer;
+	private MaterialLabel cardRankContainer;
 
-	private HanabiCardView(Color textColor, Color backgroundColor, String title, String text, boolean isForViewPlayer) {
+	private HanabiCardView(Color textColor, Color backgroundColor, String cardColor, String cardRank,
+			boolean isForViewPlayer) {
 		this.textColor = textColor;
 		this.backgroundColor = backgroundColor;
-		this.title = title;
-		this.text = text;
+		this.cardColor = cardColor;
+		this.cardRank = cardRank;
 		this.isForViewPlayer = isForViewPlayer;
-		MaterialCardTitle cardContentTitle = new MaterialCardTitle();
-		cardContentTitle.setText(title);
-		cardContentTitle.setTextColor(textColor);
+		cardColorContainer = new MaterialCardTitle();
+		cardColorContainer.setText(cardColor);
 
-		MaterialLabel cardContentLabel = new MaterialLabel(text);
-		cardContentLabel.addStyleName(ViewUtils.RESOURCES.style().fontSize14());
-		cardContentLabel.setTextColor(isForViewPlayer ? basicTextColor : textColor);
+		cardRankContainer = new MaterialLabel(cardRank);
+		cardRankContainer.addStyleName(ViewUtils.RESOURCES.style().fontSize14());
 
 		MaterialCardContent cardContent = new MaterialCardContent();
-		cardContent.add(cardContentTitle);
-		cardContent.add(cardContentLabel);
-		this.setBackgroundColor(isForViewPlayer ? basicBackgroundColor : backgroundColor);
+		cardContent.add(cardColorContainer);
+		cardContent.add(cardRankContainer);
 		this.add(cardContent);
 
 		MaterialCardAction action = new MaterialCardAction();
@@ -99,6 +99,10 @@ public class HanabiCardView extends MaterialCard {
 			rankInfoButton.setTextAlign(TextAlign.LEFT);
 			action.add(rankInfoButton);
 		}
+		cardColorContainer.setTextColor(isForViewPlayer ? unknownInfoColor : textColor);
+		cardRankContainer.setTextColor(isForViewPlayer ? unknownInfoColor : textColor);
+		setBackgroundColor(isForViewPlayer ? unknownInfoColor : backgroundColor);
+
 		this.add(action);
 	}
 
@@ -107,7 +111,7 @@ public class HanabiCardView extends MaterialCard {
 	}
 
 	public String getCardText() {
-		return text;
+		return cardRank;
 	}
 
 	public Color getCardTextColor() {
@@ -115,7 +119,7 @@ public class HanabiCardView extends MaterialCard {
 	}
 
 	public String getCardTitle() {
-		return title;
+		return cardColor;
 	}
 
 	public HasClickHandlers getColorInfoButton() {
@@ -143,7 +147,7 @@ public class HanabiCardView extends MaterialCard {
 	}
 
 	public void setCardText(String text) {
-		this.text = text;
+		cardRank = text;
 	}
 
 	public void setCardTextColor(Color textColor) {
@@ -151,7 +155,7 @@ public class HanabiCardView extends MaterialCard {
 	}
 
 	public void setCardTitle(String title) {
-		this.title = title;
+		cardColor = title;
 	}
 
 	public void setDiscardButton(MaterialButton discardButton) {
@@ -160,6 +164,25 @@ public class HanabiCardView extends MaterialCard {
 
 	public void setPlayButton(MaterialButton playButton) {
 		this.playButton = playButton;
+	}
+
+	public void showCardColor() {
+		cardColorDisplayed = true;
+		cardColorContainer.setTextColor(textColor);
+		setBackgroundColor(backgroundColor);
+	}
+
+	public void showCardRank() {
+		cardRankDisplayed = true;
+		cardRankContainer.setTextColor(textColor);
+	}
+
+	public boolean isCardColorDisplayed() {
+		return cardColorDisplayed;
+	}
+
+	public boolean isCardRankDisplayed() {
+		return cardRankDisplayed;
 	}
 
 }

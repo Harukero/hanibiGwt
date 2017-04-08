@@ -170,13 +170,13 @@ public class HanabiState implements IsSerializable {
 	private boolean checkIfCardCanBePlayed(@NotNull HanabiCard cardImpacted) {
 		List<HanabiCard> cardsForCurrentColor = cardsByColor.get(cardImpacted.getColor());
 		if (cardsForCurrentColor.isEmpty()) {
-			return cardImpacted.getNumber() == 1;
+			return cardImpacted.getRank() == 1;
 		}
 		HanabiCard lastCardPlayed = cardsForCurrentColor.get(cardsForCurrentColor.size() - 1);
 		if (lastCardPlayed == null) {
 			throw new IllegalStateException("last card played is null, but it shouldn't");
 		}
-		return cardImpacted.getNumber() - lastCardPlayed.getNumber() == 1;
+		return cardImpacted.getRank() - lastCardPlayed.getRank() == 1;
 	}
 
 	public int removeInfoToken() {

@@ -120,7 +120,7 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
 	private void drawForPlayer(List<HanabiCard> cardsList, PlayerHandViewController playerController,
 			boolean isForViewPlayer) {
 		cardsList.stream().forEach(card -> {
-			HanabiCardView cardView = HanabiCardView.createCardForColor(card.getColor(), card.getNumber(),
+			HanabiCardView cardView = HanabiCardView.createCardForColor(card.getColor(), card.getRank(),
 					isForViewPlayer);
 			HanabiCardController cardController = new HanabiCardController(this, model, card, cardView);
 			PlayerZoneView playerZone = playerController.getView();

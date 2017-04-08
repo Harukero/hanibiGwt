@@ -11,7 +11,7 @@ public class CardZonesController {
 	}
 
 	public void addNewCard(HanabiCard card) {
-		view.addNewCard(card.getColor(), card.getNumber());
+		view.addNewCard(card.getColor(), card.getRank());
 	}
 
 	public void clear() {
