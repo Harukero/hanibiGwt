@@ -49,6 +49,7 @@ public class HanabiCardController {
 		HasClickHandlers discardButton = view.getDiscardButton();
 		if (discardButton != null) {
 			discardButton.addClickHandler(event -> {
+				view.getCardMenu().hide();
 				AsyncCallback<HanabiState> callback = new HanabiAsyncCallback<HanabiState>() {
 
 					@Override
@@ -68,6 +69,7 @@ public class HanabiCardController {
 		HasClickHandlers infoColorButton = view.getColorInfoButton();
 		if (infoColorButton != null) {
 			infoColorButton.addClickHandler(event -> {
+				view.getCardMenu().hide();
 				if (model.getInfoLeft() > 0) {
 					AsyncCallback<HanabiState> callback = new HanabiAsyncCallback<HanabiState>() {
 
@@ -91,6 +93,7 @@ public class HanabiCardController {
 		HasClickHandlers infoRankButton = view.getRankInfoButton();
 		if (infoRankButton != null) {
 			infoRankButton.addClickHandler(event -> {
+				view.getCardMenu().hide();
 				if (model.getInfoLeft() > 0) {
 					AsyncCallback<HanabiState> callback = new HanabiAsyncCallback<HanabiState>() {
 
@@ -114,6 +117,7 @@ public class HanabiCardController {
 		HasClickHandlers playButton = view.getPlayButton();
 		if (playButton != null) {
 			playButton.addClickHandler(event -> {
+				view.getCardMenu().hide();
 				AsyncCallback<HanabiState> callback = new HanabiAsyncCallback<HanabiState>() {
 
 					@Override

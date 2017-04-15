@@ -3,9 +3,12 @@ package org.harukero.hanabi.client.views;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.harukero.hanabi.client.utils.ViewUtils;
 import org.harukero.hanabi.shared.utils.SharedUtils;
 
 import gwt.material.design.client.constants.Color;
+import gwt.material.design.client.ui.MaterialColumn;
+import gwt.material.design.client.ui.MaterialLabel;
 import gwt.material.design.client.ui.MaterialRow;
 
 public class CardZonesView extends MaterialRow {
@@ -17,6 +20,11 @@ public class CardZonesView extends MaterialRow {
 	}
 
 	private void init() {
+		MaterialLabel label = new MaterialLabel("Hanabi");
+		MaterialColumn col = new MaterialColumn();
+		label.addStyleName(ViewUtils.RESOURCES.style().playerName());
+		col.add(label);
+		this.add(col);
 		for (Color color : SharedUtils.HANABI_COLORS) {
 			CardZoneView view = new CardZoneView();
 			switch (color) {

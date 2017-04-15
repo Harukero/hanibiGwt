@@ -1,37 +1,32 @@
 package org.harukero.hanabi.client.views;
 
-import gwt.material.design.client.ui.MaterialCollapsibleBody;
-import gwt.material.design.client.ui.MaterialCollapsibleHeader;
-import gwt.material.design.client.ui.MaterialCollapsibleItem;
-import gwt.material.design.client.ui.MaterialLink;
+import org.harukero.hanabi.client.utils.ViewUtils;
+
+import gwt.material.design.client.ui.MaterialColumn;
+import gwt.material.design.client.ui.MaterialLabel;
+import gwt.material.design.client.ui.MaterialPanel;
 import gwt.material.design.client.ui.MaterialRow;
 
-public class PlayerZoneView extends MaterialCollapsibleItem {
+public class PlayerZoneView extends MaterialPanel {
 
 	private String playerName;
-	private MaterialCollapsibleBody body;
 	private MaterialRow row;
 
 	public PlayerZoneView(String playerName) {
 		this.playerName = playerName;
+		addStyleName(ViewUtils.RESOURCES.style().playerZoneView());
+		MaterialLabel name = new MaterialLabel(playerName);
+		name.addStyleName(ViewUtils.RESOURCES.style().playerName());
+		MaterialColumn col = new MaterialColumn();
+		col.add(name);
 
-		MaterialCollapsibleHeader header = new MaterialCollapsibleHeader();
-		MaterialLink materialName = new MaterialLink(playerName);
-		header.add(materialName);
-		this.add(header);
-
-		body = new MaterialCollapsibleBody();
 		row = new MaterialRow();
-		body.add(row);
-		this.add(body);
-	}
-
-	public MaterialCollapsibleBody getPlayerBody() {
-		return this.body;
+		row.add(col);
+		this.add(row);
 	}
 
 	public MaterialRow getPlayerHand() {
-		return this.row;
+		return row;
 	}
 
 	public String getPlayerName() {

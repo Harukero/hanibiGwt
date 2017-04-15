@@ -37,12 +37,12 @@
 			</m:MaterialSideNav>
         </m:MaterialHeader>
         <m:MaterialPanel ui:field="mainPanel" ui:id="mainPanel">
-			<m:MaterialPanel ui:field="lifePointsAndInfos">
-			</m:MaterialPanel>
 			
 			<m:MaterialPanel ui:field="panelPlayers">
-				<m:MaterialCollapsible grid="s12" textAlign="CENTER" ui:field="playerZones">
-				</m:MaterialCollapsible>
+				<m:MaterialPanel grid="s12" textAlign="CENTER" ui:field="playerZones">
+				</m:MaterialPanel>
+			</m:MaterialPanel>
+			<m:MaterialPanel ui:field="lifePointsAndInfos">
 			</m:MaterialPanel>
 			<m:MaterialPanel ui:field="cardZones" ui:id="cardZones">
 		    </m:MaterialPanel>

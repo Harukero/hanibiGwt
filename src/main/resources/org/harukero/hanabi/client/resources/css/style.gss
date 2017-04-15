@@ -26,3 +26,22 @@ body {
 	float: left;
 	width: 80%;
 }
+
+#contextMenu {
+  position: absolute;
+  display:none;
+}
+
+.hanabiCard {
+	width: 15%;
+}
+
+.playerName {
+	margin-top: 100%;
+	color: white;
+	font-size: 14px;
+}
+
+.playerZoneView {
+	right: 5%;
+}

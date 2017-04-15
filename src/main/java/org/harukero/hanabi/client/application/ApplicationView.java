@@ -26,6 +26,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.harukero.hanabi.client.utils.ViewUtils;
 import org.harukero.hanabi.client.views.CardZonesView;
 import org.harukero.hanabi.client.views.HanabiActionView;
 import org.harukero.hanabi.client.views.HanabiCardView;
@@ -37,8 +38,6 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewImpl;
 
-import gwt.material.design.client.ui.MaterialCollapsible;
-import gwt.material.design.client.ui.MaterialCollapsibleBody;
 import gwt.material.design.client.ui.MaterialColumn;
 import gwt.material.design.client.ui.MaterialLink;
 import gwt.material.design.client.ui.MaterialPanel;
@@ -48,11 +47,11 @@ public class ApplicationView extends ViewImpl implements ApplicationPresenter.My
 	interface Binder extends UiBinder<Widget, ApplicationView> {
 	}
 
-	private Map<MaterialCollapsibleBody, MaterialRow> handsByPlayers;
+	private Map<MaterialPanel, MaterialRow> handsByPlayers;
 	private Map<MaterialRow, List<Widget>> cardsInHands;
 
 	@UiField
-	MaterialCollapsible playerZones;
+	MaterialPanel playerZones;
 
 	@UiField
 	MaterialPanel mainPanel, cardZones;
@@ -80,15 +79,15 @@ public class ApplicationView extends ViewImpl implements ApplicationPresenter.My
 	@Override
 	public void addCardForWidgetIfPossible(PlayerZoneView playerZone, HanabiCardView hanabiCardView) {
 		MaterialRow materialRow;
-		if (!handsByPlayers.containsKey(playerZone.getPlayerBody())) {
+		if (!handsByPlayers.containsKey(playerZone)) {
 			materialRow = playerZone.getPlayerHand();
-			handsByPlayers.put(playerZone.getPlayerBody(), materialRow);
+			handsByPlayers.put(playerZone, materialRow);
 			cardsInHands.put(materialRow, new ArrayList<>());
 		}
 		playerZone.setVisible(true);
-		materialRow = handsByPlayers.get(playerZone.getPlayerBody());
+		materialRow = handsByPlayers.get(playerZone);
 		MaterialColumn column = new MaterialColumn();
-		column.setGrid("s3");
+		column.addStyleName(ViewUtils.RESOURCES.style().hanabiCard());
 		column.add(hanabiCardView);
 
 		materialRow.add(column);

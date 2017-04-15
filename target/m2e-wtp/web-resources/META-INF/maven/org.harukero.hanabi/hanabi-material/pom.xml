@@ -197,24 +197,5 @@
 		    <version>3.3.1</version>
 		</dependency>
 
-        <!-- playn -->
-        <dependency>
-		    <groupId>io.playn</groupId>
-		    <artifactId>playn-core</artifactId>
-		    <version>2.0-rc4</version>
-		</dependency>
-		
-		<!-- https://mvnrepository.com/artifact/io.playn/playn-html -->
-		<dependency>
-		    <groupId>io.playn</groupId>
-		    <artifactId>playn-html</artifactId>
-		    <version>2.0-rc4</version>
-		</dependency>
-<!-- https://mvnrepository.com/artifact/io.playn/playn-webgl -->
-<dependency>
-    <groupId>io.playn</groupId>
-    <artifactId>playn-webgl</artifactId>
-    <version>2.0-rc4</version>
-</dependency>
     </dependencies>
 </project>

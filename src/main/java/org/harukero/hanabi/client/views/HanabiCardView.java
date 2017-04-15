@@ -2,18 +2,20 @@ package org.harukero.hanabi.client.views;
 
 import org.harukero.hanabi.client.utils.ViewUtils;
 
+import com.google.gwt.event.dom.client.HasAllMouseHandlers;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 
 import gwt.material.design.client.constants.Color;
 import gwt.material.design.client.constants.TextAlign;
-import gwt.material.design.client.ui.MaterialButton;
 import gwt.material.design.client.ui.MaterialCard;
-import gwt.material.design.client.ui.MaterialCardAction;
 import gwt.material.design.client.ui.MaterialCardContent;
 import gwt.material.design.client.ui.MaterialCardTitle;
+import gwt.material.design.client.ui.MaterialCollection;
+import gwt.material.design.client.ui.MaterialCollectionItem;
 import gwt.material.design.client.ui.MaterialLabel;
+import gwt.material.design.client.ui.MaterialLink;
 
-public class HanabiCardView extends MaterialCard {
+public class HanabiCardView extends MaterialCard implements HasAllMouseHandlers {
 
 	private static final Color unknownInfoColor = Color.BLACK;
 
@@ -45,18 +47,20 @@ public class HanabiCardView extends MaterialCard {
 	private Color backgroundColor;
 	private String cardColor;
 	private String cardRank;
-	private MaterialButton discardButton;
-	private MaterialButton playButton;
+	private MaterialLink discardButton;
+	private MaterialLink playButton;
 	private boolean isForViewPlayer;
-	private MaterialButton rankInfoButton;
-	private MaterialButton colorInfoButton;
+	private MaterialLink rankInfoButton;
+	private MaterialLink colorInfoButton;
 	private boolean cardColorDisplayed;
 	private boolean cardRankDisplayed;
 	private MaterialCardTitle cardColorContainer;
 	private MaterialLabel cardRankContainer;
+	private HanabiPopupPanel cardMenu;
 
 	private HanabiCardView(Color textColor, Color backgroundColor, String cardColor, String cardRank,
 			boolean isForViewPlayer) {
+
 		this.textColor = textColor;
 		this.backgroundColor = backgroundColor;
 		this.cardColor = cardColor;
@@ -64,7 +68,6 @@ public class HanabiCardView extends MaterialCard {
 		this.isForViewPlayer = isForViewPlayer;
 		cardColorContainer = new MaterialCardTitle();
 		cardColorContainer.setText(cardColor);
-
 		cardRankContainer = new MaterialLabel(cardRank);
 		cardRankContainer.addStyleName(ViewUtils.RESOURCES.style().fontSize14());
 
@@ -72,38 +75,68 @@ public class HanabiCardView extends MaterialCard {
 		cardContent.add(cardColorContainer);
 		cardContent.add(cardRankContainer);
 		this.add(cardContent);
+		buildActionMenu(isForViewPlayer);
+		setMenuClickHandler();
 
-		MaterialCardAction action = new MaterialCardAction();
-		if (isForViewPlayer) {
-			playButton = new MaterialButton("PLAY");
-			playButton.addStyleName(ViewUtils.RESOURCES.style().cardButton());
-			playButton.setTextColor(Color.BLACK);
-			playButton.setTextAlign(TextAlign.RIGHT);
-			action.add(playButton);
-
-			discardButton = new MaterialButton("DISCARD");
-			discardButton.addStyleName(ViewUtils.RESOURCES.style().cardButton());
-			discardButton.setTextColor(Color.BLACK);
-			discardButton.setTextAlign(TextAlign.LEFT);
-			action.add(discardButton);
-		} else {
-			colorInfoButton = new MaterialButton("COLOR INFO");
-			colorInfoButton.addStyleName(ViewUtils.RESOURCES.style().cardButton());
-			colorInfoButton.setTextColor(Color.BLACK);
-			colorInfoButton.setTextAlign(TextAlign.RIGHT);
-			action.add(colorInfoButton);
-
-			rankInfoButton = new MaterialButton("RANK INFO");
-			rankInfoButton.addStyleName(ViewUtils.RESOURCES.style().cardButton());
-			rankInfoButton.setTextColor(Color.BLACK);
-			rankInfoButton.setTextAlign(TextAlign.LEFT);
-			action.add(rankInfoButton);
-		}
 		cardColorContainer.setTextColor(isForViewPlayer ? unknownInfoColor : textColor);
 		cardRankContainer.setTextColor(isForViewPlayer ? unknownInfoColor : textColor);
 		setBackgroundColor(isForViewPlayer ? unknownInfoColor : backgroundColor);
 
-		this.add(action);
+		// this.add(action);
+	}
+
+	private void setMenuClickHandler() {
+		addClickHandler(event -> {
+			cardMenu.setPopupPositionAndShow((offsetWidth, offsetHeight) -> {
+				int left = event.getClientX();
+				int top = event.getClientY();
+				cardMenu.setPopupPosition(left, top);
+			});
+		});
+	}
+
+	private void buildActionMenu(boolean isForViewPlayer) {
+		MaterialCollection action = new MaterialCollection();
+
+		MaterialCollectionItem item;
+		if (isForViewPlayer) {
+			item = new MaterialCollectionItem();
+			playButton = new MaterialLink("PLAY");
+			playButton.addStyleName(ViewUtils.RESOURCES.style().cardButton());
+			playButton.setTextColor(Color.WHITE);
+			item.setBackgroundColor(Color.GREEN);
+			item.setTextAlign(TextAlign.CENTER);
+			item.add(playButton);
+			action.add(item);
+
+			item = new MaterialCollectionItem();
+			discardButton = new MaterialLink("DISCARD");
+			discardButton.addStyleName(ViewUtils.RESOURCES.style().cardButton());
+			discardButton.setTextColor(Color.WHITE);
+			item.setBackgroundColor(Color.RED);
+			item.setTextAlign(TextAlign.CENTER);
+			item.add(discardButton);
+			action.add(item);
+		} else {
+			item = new MaterialCollectionItem();
+			colorInfoButton = new MaterialLink("COLOR INFO");
+			colorInfoButton.addStyleName(ViewUtils.RESOURCES.style().cardButton());
+			colorInfoButton.setTextColor(Color.WHITE);
+			item.setBackgroundColor(Color.BLUE);
+			item.setTextAlign(TextAlign.CENTER);
+			item.add(colorInfoButton);
+			action.add(item);
+
+			item = new MaterialCollectionItem();
+			rankInfoButton = new MaterialLink("RANK INFO");
+			rankInfoButton.addStyleName(ViewUtils.RESOURCES.style().cardButton());
+			rankInfoButton.setTextColor(Color.BLACK);
+			item.setBackgroundColor(Color.BLUE);
+			item.setTextAlign(TextAlign.CENTER);
+			item.add(rankInfoButton);
+			action.add(item);
+		}
+		cardMenu = new HanabiPopupPanel(action);
 	}
 
 	public Color getCardBackgroundColor() {
@@ -158,11 +191,11 @@ public class HanabiCardView extends MaterialCard {
 		cardColor = title;
 	}
 
-	public void setDiscardButton(MaterialButton discardButton) {
+	public void setDiscardButton(MaterialLink discardButton) {
 		this.discardButton = discardButton;
 	}
 
-	public void setPlayButton(MaterialButton playButton) {
+	public void setPlayButton(MaterialLink playButton) {
 		this.playButton = playButton;
 	}
 
@@ -170,11 +203,18 @@ public class HanabiCardView extends MaterialCard {
 		cardColorDisplayed = true;
 		cardColorContainer.setTextColor(textColor);
 		setBackgroundColor(backgroundColor);
+		if (cardRankDisplayed) {
+			cardRankContainer.setTextColor(textColor);
+		}
 	}
 
 	public void showCardRank() {
 		cardRankDisplayed = true;
-		cardRankContainer.setTextColor(textColor);
+		if (!cardColorDisplayed) {
+			cardRankContainer.setTextColor(Color.WHITE);
+		} else {
+			cardRankContainer.setTextColor(textColor);
+		}
 	}
 
 	public boolean isCardColorDisplayed() {
@@ -183,6 +223,10 @@ public class HanabiCardView extends MaterialCard {
 
 	public boolean isCardRankDisplayed() {
 		return cardRankDisplayed;
+	}
+
+	public HanabiPopupPanel getCardMenu() {
+		return cardMenu;
 	}
 
 }

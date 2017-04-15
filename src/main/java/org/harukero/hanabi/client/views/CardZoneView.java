@@ -1,5 +1,7 @@
 package org.harukero.hanabi.client.views;
 
+import org.harukero.hanabi.client.utils.ViewUtils;
+
 import gwt.material.design.client.constants.Color;
 import gwt.material.design.client.ui.MaterialCard;
 import gwt.material.design.client.ui.MaterialCardAction;
@@ -20,8 +22,9 @@ public class CardZoneView extends MaterialColumn {
 	private MaterialLabel cardContentLabel;
 
 	public CardZoneView() {
-		setGrid("s2");
+		// setGrid("s2");
 		card = new MaterialCard();
+		addStyleName(ViewUtils.RESOURCES.style().hanabiCard());
 		cardContent = new MaterialCardContent();
 		cardTitle = new MaterialCardTitle();
 		cardContent.add(cardTitle);

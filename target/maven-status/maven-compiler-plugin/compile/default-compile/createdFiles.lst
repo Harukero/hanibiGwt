@@ -6,6 +6,7 @@ org\harukero\hanabi\client\views\HanabiModal.class
 org\harukero\hanabi\client\views\HanabiActionView$1.class
 org\harukero\hanabi\shared\utils\SharedUtils.class
 org\harukero\hanabi\client\application\home\HomePresenter$MyView.class
+org\harukero\hanabi\client\views\CardZoneView.class
 org\harukero\hanabi\client\views\HanabiCardView$1.class
 org\harukero\hanabi\client\application\IParent.class
 org\harukero\hanabi\client\i18n\HanabiTextConstants.class
@@ -15,6 +16,7 @@ org\harukero\hanabi\client\application\ApplicationPresenter$MyProxy.class
 org\harukero\hanabi\client\application\ApplicationView.class
 org\harukero\hanabi\client\rpc\HanabiStateUpdaterServiceAsync.class
 org\harukero\hanabi\client\controllers\HanabiCardController$2.class
+org\harukero\hanabi\client\views\CardZonesView.class
 org\harukero\hanabi\client\application\home\HomePresenter$MyProxy.class
 org\harukero\hanabi\client\application\ApplicationPresenter.class
 org\harukero\hanabi\client\place\NameTokens.class
@@ -26,6 +28,7 @@ org\harukero\hanabi\shared\core\HanabiState.class
 org\harukero\hanabi\client\application\ApplicationModule.class
 org\harukero\hanabi\shared\core\HanabiActionBuilder.class
 org\harukero\hanabi\client\resources\AppResources$Style.class
+org\harukero\hanabi\client\views\CardZonesView$1.class
 org\harukero\hanabi\client\application\home\HomeView$Binder.class
 org\harukero\hanabi\client\controllers\HanabiCardController$1.class
 org\harukero\hanabi\client\application\ApplicationView$Binder.class
@@ -38,6 +41,7 @@ org\harukero\hanabi\client\utils\IStyleNames.class
 org\harukero\hanabi\client\gin\ClientModule.class
 org\harukero\hanabi\client\views\LifeAndInfosTokenContainerView.class
 org\harukero\hanabi\shared\core\HanabiActionType.class
+org\harukero\hanabi\client\controllers\CardZonesController.class
 org\harukero\hanabi\client\application\home\HomePresenter.class
 org\harukero\hanabi\client\resources\AppResources.class
 org\harukero\hanabi\client\controllers\PlayerHandViewController.class

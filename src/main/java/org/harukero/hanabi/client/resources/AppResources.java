@@ -34,6 +34,12 @@ public interface AppResources extends ClientBundle {
 
 		String hanabiChip();
 
+		String hanabiCard();
+
+		String playerName();
+
+		String playerZoneView();
+
 	}
 
 	@Source("css/normalize.gss")
