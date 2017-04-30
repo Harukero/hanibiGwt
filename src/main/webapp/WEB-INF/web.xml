@@ -36,6 +36,6 @@
 	
 	<servlet-mapping>
 	  <servlet-name>hanabiStateUpdaterServiceImpl</servlet-name>
-	  <url-pattern>/GwtMaterialBasic/hanabiStateUpdate</url-pattern>
+	  <url-pattern>/Hanabi/hanabiStateUpdate</url-pattern>
 	</servlet-mapping>
 </web-app>

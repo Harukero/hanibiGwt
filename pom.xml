@@ -101,7 +101,7 @@
                     <style>PRETTY</style>
 
                     <runTarget>index.html</runTarget>
-                    <module>org.harukero.hanabi.GwtMaterialBasic</module>
+                    <module>org.harukero.hanabi.Hanabi</module>
                 </configuration>
                 <executions>
                     <execution>
