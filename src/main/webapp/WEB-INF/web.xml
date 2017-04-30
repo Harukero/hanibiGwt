@@ -31,7 +31,7 @@
 	<!-- Servlets -->
 	<servlet>
 	  <servlet-name>hanabiStateUpdaterServiceImpl</servlet-name>
-	  <servlet-class>org.harukero.hanabi.server.rpc.HanabiStateUpdaterServiceImpl</servlet-class>
+	  <servlet-class>com.harukero.hanabi.server.rpc.HanabiStateUpdaterServiceImpl</servlet-class>
 	</servlet>
 	
 	<servlet-mapping>

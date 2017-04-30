@@ -21,7 +21,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.harukero.hanabi</groupId>
+    <groupId>com.harukero.hanabi</groupId>
     <artifactId>hanabi-material</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
@@ -101,7 +101,7 @@
                     <style>PRETTY</style>
 
                     <runTarget>index.html</runTarget>
-                    <module>org.harukero.hanabi.Hanabi</module>
+                    <module>com.harukero.hanabi.Hanabi</module>
                 </configuration>
                 <executions>
                     <execution>

@@ -1,0 +1,53 @@
+<!--
+  #%L
+  GwtMaterial
+  %%
+  Copyright (C) 2015 - 2017 GwtMaterialDesign
+  %%
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+       http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  #L%
+  -->
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+        xmlns:g='urn:import:com.google.gwt.user.client.ui'
+        xmlns:m="urn:import:gwt.material.design.client.ui">
+
+    <ui:with field="res" type="com.harukero.hanabi.client.resources.AppResources"/>
+
+    <m:MaterialPanel>
+        <m:MaterialHeader ui:field="header">
+			<m:MaterialNavBar backgroundColor="PURPLE_DARKEN_4"  activates="mysidenav">
+				<m:MaterialImage resource="{res.logo}"/>
+			</m:MaterialNavBar>
+			<m:MaterialSideNav m:id="mysidenav" type="FIXED" top="64" width="200" closeOnClick="true" alwaysShowActivator="true" showOnAttach="true">
+				<m:MaterialLink textColor="RED" text="2 players game" ui:field="two_players_game"/>
+				<m:MaterialLink textColor="YELLOW" text="3 players game" ui:field="three_players_game"/>
+				<m:MaterialLink textColor="GREEN" text="4 players game" ui:field="four_players_game"/>
+				<m:MaterialLink textColor="BLUE" text="5 players game" ui:field="five_players_game"/>
+				<m:MaterialLink textColor="GREY" text="Rules" ui:field="rules"/>
+			</m:MaterialSideNav>
+        </m:MaterialHeader>
+        <m:MaterialPanel ui:field="mainPanel" ui:id="mainPanel">
+			
+			<m:MaterialPanel ui:field="panelPlayers">
+				<m:MaterialPanel grid="s12" textAlign="CENTER" ui:field="playerZones">
+				</m:MaterialPanel>
+			</m:MaterialPanel>
+			<m:MaterialPanel ui:field="lifePointsAndInfos">
+			</m:MaterialPanel>
+			<m:MaterialPanel ui:field="cardZones" ui:id="cardZones">
+		    </m:MaterialPanel>
+		</m:MaterialPanel>
+		<m:MaterialPanel  ui:field="actionFieldAside" ui:id="actionFieldAside">
+		</m:MaterialPanel>
+	</m:MaterialPanel>
+</ui:UiBinder>
