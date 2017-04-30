@@ -4,89 +4,162 @@ import org.harukero.hanabi.client.utils.ViewUtils;
 
 import com.google.gwt.event.dom.client.HasAllMouseHandlers;
 import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.resources.client.ImageResource;
 
 import gwt.material.design.client.constants.Color;
-import gwt.material.design.client.constants.TextAlign;
-import gwt.material.design.client.ui.MaterialCard;
-import gwt.material.design.client.ui.MaterialCardContent;
-import gwt.material.design.client.ui.MaterialCardTitle;
 import gwt.material.design.client.ui.MaterialCollection;
 import gwt.material.design.client.ui.MaterialCollectionItem;
-import gwt.material.design.client.ui.MaterialLabel;
-import gwt.material.design.client.ui.MaterialLink;
+import gwt.material.design.client.ui.MaterialImage;
+import gwt.material.design.client.ui.MaterialPanel;
 
-public class HanabiCardView extends MaterialCard implements HasAllMouseHandlers {
+public class HanabiCardView extends MaterialPanel implements HasAllMouseHandlers {
 
-	private static final Color unknownInfoColor = Color.BLACK;
+	public static final ImageResource blackCard = ViewUtils.RESOURCES.black();
 
 	public static HanabiCardView createCardForColor(Color color, Integer rank, boolean isForViewPlayer) {
 		switch (color) {
 		case RED:
-			return new HanabiCardView(Color.WHITE, Color.RED, ViewUtils.CONSTANTS.color_red(), rank.toString(),
-					isForViewPlayer);
+			switch (rank) {
+			case 1:
+				return new HanabiCardView(Color.RED, rank, ViewUtils.RESOURCES.red_1(), ViewUtils.RESOURCES.black_1(),
+						ViewUtils.RESOURCES.red(), isForViewPlayer);
+			case 2:
+				return new HanabiCardView(Color.RED, rank, ViewUtils.RESOURCES.red_2(), ViewUtils.RESOURCES.black_2(),
+						ViewUtils.RESOURCES.red(), isForViewPlayer);
+			case 3:
+				return new HanabiCardView(Color.RED, rank, ViewUtils.RESOURCES.red_3(), ViewUtils.RESOURCES.black_3(),
+						ViewUtils.RESOURCES.red(), isForViewPlayer);
+			case 4:
+				return new HanabiCardView(Color.RED, rank, ViewUtils.RESOURCES.red_4(), ViewUtils.RESOURCES.black_4(),
+						ViewUtils.RESOURCES.red(), isForViewPlayer);
+			case 5:
+				return new HanabiCardView(Color.RED, rank, ViewUtils.RESOURCES.red_5(), ViewUtils.RESOURCES.black_5(),
+						ViewUtils.RESOURCES.red(), isForViewPlayer);
+			default:
+				break;
+			}
 		case GREEN:
-			return new HanabiCardView(Color.WHITE, Color.GREEN, ViewUtils.CONSTANTS.color_green(), rank.toString(),
-					isForViewPlayer);
+			switch (rank) {
+			case 1:
+				return new HanabiCardView(Color.GREEN, rank, ViewUtils.RESOURCES.green_1(),
+						ViewUtils.RESOURCES.black_1(), ViewUtils.RESOURCES.green(), isForViewPlayer);
+			case 2:
+				return new HanabiCardView(Color.GREEN, rank, ViewUtils.RESOURCES.green_2(),
+						ViewUtils.RESOURCES.black_2(), ViewUtils.RESOURCES.green(), isForViewPlayer);
+			case 3:
+				return new HanabiCardView(Color.GREEN, rank, ViewUtils.RESOURCES.green_3(),
+						ViewUtils.RESOURCES.black_3(), ViewUtils.RESOURCES.green(), isForViewPlayer);
+			case 4:
+				return new HanabiCardView(Color.GREEN, rank, ViewUtils.RESOURCES.green_4(),
+						ViewUtils.RESOURCES.black_4(), ViewUtils.RESOURCES.green(), isForViewPlayer);
+			case 5:
+				return new HanabiCardView(Color.GREEN, rank, ViewUtils.RESOURCES.green_5(),
+						ViewUtils.RESOURCES.black_5(), ViewUtils.RESOURCES.green(), isForViewPlayer);
+			default:
+				break;
+			}
+
 		case BLUE:
-			return new HanabiCardView(Color.WHITE, Color.BLUE, ViewUtils.CONSTANTS.color_blue(), rank.toString(),
-					isForViewPlayer);
+			switch (rank) {
+			case 1:
+				return new HanabiCardView(Color.BLUE, rank, ViewUtils.RESOURCES.blue_1(), ViewUtils.RESOURCES.black_1(),
+						ViewUtils.RESOURCES.blue(), isForViewPlayer);
+			case 2:
+				return new HanabiCardView(Color.BLUE, rank, ViewUtils.RESOURCES.blue_2(), ViewUtils.RESOURCES.black_2(),
+						ViewUtils.RESOURCES.blue(), isForViewPlayer);
+			case 3:
+				return new HanabiCardView(Color.BLUE, rank, ViewUtils.RESOURCES.blue_3(), ViewUtils.RESOURCES.black_3(),
+						ViewUtils.RESOURCES.blue(), isForViewPlayer);
+			case 4:
+				return new HanabiCardView(Color.BLUE, rank, ViewUtils.RESOURCES.blue_4(), ViewUtils.RESOURCES.black_4(),
+						ViewUtils.RESOURCES.blue(), isForViewPlayer);
+			case 5:
+				return new HanabiCardView(Color.BLUE, rank, ViewUtils.RESOURCES.blue_5(), ViewUtils.RESOURCES.black_5(),
+						ViewUtils.RESOURCES.blue(), isForViewPlayer);
+			default:
+				break;
+			}
 		case WHITE:
-			return new HanabiCardView(Color.BLACK, Color.WHITE, ViewUtils.CONSTANTS.color_white(), rank.toString(),
-					isForViewPlayer);
+			switch (rank) {
+			case 1:
+				return new HanabiCardView(Color.WHITE, rank, ViewUtils.RESOURCES.white_1(),
+						ViewUtils.RESOURCES.black_1(), ViewUtils.RESOURCES.white(), isForViewPlayer);
+			case 2:
+				return new HanabiCardView(Color.WHITE, rank, ViewUtils.RESOURCES.white_2(),
+						ViewUtils.RESOURCES.black_2(), ViewUtils.RESOURCES.white(), isForViewPlayer);
+			case 3:
+				return new HanabiCardView(Color.WHITE, rank, ViewUtils.RESOURCES.white_3(),
+						ViewUtils.RESOURCES.black_3(), ViewUtils.RESOURCES.white(), isForViewPlayer);
+			case 4:
+				return new HanabiCardView(Color.WHITE, rank, ViewUtils.RESOURCES.white_4(),
+						ViewUtils.RESOURCES.black_4(), ViewUtils.RESOURCES.white(), isForViewPlayer);
+			case 5:
+				return new HanabiCardView(Color.WHITE, rank, ViewUtils.RESOURCES.white_5(),
+						ViewUtils.RESOURCES.black_5(), ViewUtils.RESOURCES.white(), isForViewPlayer);
+			default:
+				break;
+			}
 		case YELLOW:
-			return new HanabiCardView(Color.BLACK, Color.YELLOW, ViewUtils.CONSTANTS.color_yellow(), rank.toString(),
-					isForViewPlayer);
+			switch (rank) {
+			case 1:
+				return new HanabiCardView(Color.YELLOW, rank, ViewUtils.RESOURCES.yellow_1(),
+						ViewUtils.RESOURCES.black_1(), ViewUtils.RESOURCES.yellow(), isForViewPlayer);
+			case 2:
+				return new HanabiCardView(Color.YELLOW, rank, ViewUtils.RESOURCES.yellow_2(),
+						ViewUtils.RESOURCES.black_2(), ViewUtils.RESOURCES.yellow(), isForViewPlayer);
+			case 3:
+				return new HanabiCardView(Color.YELLOW, rank, ViewUtils.RESOURCES.yellow_3(),
+						ViewUtils.RESOURCES.black_3(), ViewUtils.RESOURCES.yellow(), isForViewPlayer);
+			case 4:
+				return new HanabiCardView(Color.YELLOW, rank, ViewUtils.RESOURCES.yellow_4(),
+						ViewUtils.RESOURCES.black_4(), ViewUtils.RESOURCES.yellow(), isForViewPlayer);
+			case 5:
+				return new HanabiCardView(Color.YELLOW, rank, ViewUtils.RESOURCES.yellow_5(),
+						ViewUtils.RESOURCES.black_5(), ViewUtils.RESOURCES.yellow(), isForViewPlayer);
+			default:
+				break;
+			}
 		default:
-			return new HanabiCardView(Color.WHITE, Color.BLACK, ViewUtils.CONSTANTS.color_black(),
-					"EVERYTHING IS BLACK → THIS IS AN ERROR", isForViewPlayer);
+			return null;
 		}
 
 	}
 
-	private Color textColor;
-	private Color backgroundColor;
-	private String cardColor;
-	private String cardRank;
-	private MaterialLink discardButton;
-	private MaterialLink playButton;
+	private Color cardColor;
+	private Integer cardRank;
+	private MaterialImage discardButton;
+	private MaterialImage playButton;
 	private boolean isForViewPlayer;
-	private MaterialLink rankInfoButton;
-	private MaterialLink colorInfoButton;
+	private MaterialImage rankInfoButton;
+	private MaterialImage colorInfoButton;
 	private boolean cardColorDisplayed;
 	private boolean cardRankDisplayed;
-	private MaterialCardTitle cardColorContainer;
-	private MaterialLabel cardRankContainer;
 	private HanabiPopupPanel cardMenu;
+	private MaterialImage cardImage;
+	private ImageResource justRank;
+	private ImageResource justColor;
+	private ImageResource fullCard;
 
-	private HanabiCardView(Color textColor, Color backgroundColor, String cardColor, String cardRank,
-			boolean isForViewPlayer) {
-
-		this.textColor = textColor;
-		this.backgroundColor = backgroundColor;
+	private HanabiCardView(Color cardColor, Integer cardRank, ImageResource fullCard, ImageResource justRank,
+			ImageResource justColor, boolean isForViewPlayer) {
 		this.cardColor = cardColor;
 		this.cardRank = cardRank;
+		this.fullCard = fullCard;
+		this.justRank = justRank;
+		this.justColor = justColor;
 		this.isForViewPlayer = isForViewPlayer;
-		cardColorContainer = new MaterialCardTitle();
-		cardColorContainer.setText(cardColor);
-		cardRankContainer = new MaterialLabel(cardRank);
-		cardRankContainer.addStyleName(ViewUtils.RESOURCES.style().fontSize14());
-
-		MaterialCardContent cardContent = new MaterialCardContent();
-		cardContent.add(cardColorContainer);
-		cardContent.add(cardRankContainer);
-		this.add(cardContent);
+		if (isForViewPlayer) {
+			cardImage = new MaterialImage(blackCard);
+		} else {
+			cardImage = new MaterialImage(fullCard);
+		}
+		this.add(cardImage);
 		buildActionMenu(isForViewPlayer);
 		setMenuClickHandler();
-
-		cardColorContainer.setTextColor(isForViewPlayer ? unknownInfoColor : textColor);
-		cardRankContainer.setTextColor(isForViewPlayer ? unknownInfoColor : textColor);
-		setBackgroundColor(isForViewPlayer ? unknownInfoColor : backgroundColor);
-
-		// this.add(action);
 	}
 
 	private void setMenuClickHandler() {
-		addClickHandler(event -> {
+		cardImage.addClickHandler(event -> {
 			cardMenu.setPopupPositionAndShow((offsetWidth, offsetHeight) -> {
 				int left = event.getClientX();
 				int top = event.getClientY();
@@ -97,61 +170,51 @@ public class HanabiCardView extends MaterialCard implements HasAllMouseHandlers 
 
 	private void buildActionMenu(boolean isForViewPlayer) {
 		MaterialCollection action = new MaterialCollection();
-
+		action.setStyleName(ViewUtils.RESOURCES.style().hanabiPopupMenu());
 		MaterialCollectionItem item;
 		if (isForViewPlayer) {
 			item = new MaterialCollectionItem();
-			playButton = new MaterialLink("PLAY");
-			playButton.addStyleName(ViewUtils.RESOURCES.style().cardButton());
-			playButton.setTextColor(Color.WHITE);
-			item.setBackgroundColor(Color.GREEN);
-			item.setTextAlign(TextAlign.CENTER);
+			playButton = new MaterialImage(ViewUtils.RESOURCES.play());
 			item.add(playButton);
+			item.setStyleName(ViewUtils.RESOURCES.style().hanabiPopupMenu());
+			item.setWidth(playButton.getWidth() + "px");
+			item.setHeight(playButton.getHeight() + "px");
 			action.add(item);
 
 			item = new MaterialCollectionItem();
-			discardButton = new MaterialLink("DISCARD");
-			discardButton.addStyleName(ViewUtils.RESOURCES.style().cardButton());
-			discardButton.setTextColor(Color.WHITE);
-			item.setBackgroundColor(Color.RED);
-			item.setTextAlign(TextAlign.CENTER);
+			discardButton = new MaterialImage(ViewUtils.RESOURCES.discard());
 			item.add(discardButton);
+			item.setStyleName(ViewUtils.RESOURCES.style().hanabiPopupMenu());
+			item.setWidth(discardButton.getWidth() + "px");
+			item.setHeight(discardButton.getHeight() + "px");
 			action.add(item);
 		} else {
 			item = new MaterialCollectionItem();
-			colorInfoButton = new MaterialLink("COLOR INFO");
-			colorInfoButton.addStyleName(ViewUtils.RESOURCES.style().cardButton());
-			colorInfoButton.setTextColor(Color.WHITE);
-			item.setBackgroundColor(Color.BLUE);
-			item.setTextAlign(TextAlign.CENTER);
+			colorInfoButton = new MaterialImage(ViewUtils.RESOURCES.color());
+			colorInfoButton.setWidth("121px");
+			colorInfoButton.setHeight("40px");
 			item.add(colorInfoButton);
+			item.setStyleName(ViewUtils.RESOURCES.style().hanabiPopupMenu());
+			item.setWidth("121px");
+			item.setHeight("40px");
 			action.add(item);
 
 			item = new MaterialCollectionItem();
-			rankInfoButton = new MaterialLink("RANK INFO");
-			rankInfoButton.addStyleName(ViewUtils.RESOURCES.style().cardButton());
-			rankInfoButton.setTextColor(Color.BLACK);
-			item.setBackgroundColor(Color.BLUE);
-			item.setTextAlign(TextAlign.CENTER);
+			rankInfoButton = new MaterialImage(ViewUtils.RESOURCES.number());
 			item.add(rankInfoButton);
+			item.setStyleName(ViewUtils.RESOURCES.style().hanabiPopupMenu());
+			item.setWidth(rankInfoButton.getWidth() + "px");
+			item.setHeight(rankInfoButton.getHeight() + "px");
 			action.add(item);
 		}
 		cardMenu = new HanabiPopupPanel(action);
 	}
 
-	public Color getCardBackgroundColor() {
-		return backgroundColor;
-	}
-
-	public String getCardText() {
+	public Integer getCardText() {
 		return cardRank;
 	}
 
-	public Color getCardTextColor() {
-		return textColor;
-	}
-
-	public String getCardTitle() {
+	public Color getCardTitle() {
 		return cardColor;
 	}
 
@@ -175,45 +238,47 @@ public class HanabiCardView extends MaterialCard implements HasAllMouseHandlers 
 		return isForViewPlayer;
 	}
 
-	public void setCardBackgroundColor(Color backgroundColor) {
-		this.backgroundColor = backgroundColor;
-	}
-
-	public void setCardText(String text) {
+	public void setCardText(Integer text) {
 		cardRank = text;
 	}
 
-	public void setCardTextColor(Color textColor) {
-		this.textColor = textColor;
-	}
-
-	public void setCardTitle(String title) {
+	public void setCardTitle(Color title) {
 		cardColor = title;
 	}
 
-	public void setDiscardButton(MaterialLink discardButton) {
+	public void setDiscardButton(MaterialImage discardButton) {
 		this.discardButton = discardButton;
 	}
 
-	public void setPlayButton(MaterialLink playButton) {
+	public void setPlayButton(MaterialImage playButton) {
 		this.playButton = playButton;
-	}
-
-	public void showCardColor() {
-		cardColorDisplayed = true;
-		cardColorContainer.setTextColor(textColor);
-		setBackgroundColor(backgroundColor);
-		if (cardRankDisplayed) {
-			cardRankContainer.setTextColor(textColor);
-		}
 	}
 
 	public void showCardRank() {
 		cardRankDisplayed = true;
-		if (!cardColorDisplayed) {
-			cardRankContainer.setTextColor(Color.WHITE);
-		} else {
-			cardRankContainer.setTextColor(textColor);
+		if (isForViewPlayer) {
+			this.remove(cardImage);
+			if (cardColorDisplayed) {
+				cardImage = new MaterialImage(fullCard);
+			} else {
+				cardImage = new MaterialImage(justRank);
+			}
+			this.add(cardImage);
+			setMenuClickHandler();
+		}
+	}
+
+	public void showCardColor() {
+		cardColorDisplayed = true;
+		if (isForViewPlayer) {
+			this.remove(cardImage);
+			if (cardRankDisplayed) {
+				cardImage = new MaterialImage(fullCard);
+			} else {
+				cardImage = new MaterialImage(justColor);
+			}
+			this.add(cardImage);
+			setMenuClickHandler();
 		}
 	}
 

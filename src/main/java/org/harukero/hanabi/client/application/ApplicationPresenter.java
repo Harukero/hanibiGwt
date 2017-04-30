@@ -113,7 +113,7 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
 		view.getTwo_players_game().addClickHandler(event -> startNewGame(2));
 		view.getThree_players_game().addClickHandler(event -> notImplementedYet());
 		view.getFour_players_game().addClickHandler(event -> notImplementedYet());
-		view.getFive_players_game().addClickHandler(event -> notImplementedYet());
+		view.getFive_players_game().addClickHandler(event -> startNewGame(5));
 		view.getRules().addClickHandler(event -> notImplementedYet());
 	}
 

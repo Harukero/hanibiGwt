@@ -1,5 +1,5 @@
 body {
-	background-color: #263238;
+	background-color: #455a64;
 }
 
 .fontSize14 {
@@ -8,6 +8,13 @@ body {
 
 .cardButton {
 	margin: 4px;
+}
+
+.hanabiPopupMenu {
+	margin: 0px !important;
+	padding: 0px !important;
+	border: none !important;
+	background-color: #455A64;
 }
 
 .hanabiChip {

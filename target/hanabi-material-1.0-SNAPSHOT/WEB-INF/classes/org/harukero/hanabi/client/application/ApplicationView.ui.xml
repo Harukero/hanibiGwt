@@ -26,7 +26,7 @@
     <m:MaterialPanel>
         <m:MaterialHeader ui:field="header">
 			<m:MaterialNavBar backgroundColor="PURPLE_DARKEN_4"  activates="mysidenav">
-				<m:MaterialNavBrand text="HANABI" paddingLeft="20"/>
+				<m:MaterialImage resource="{res.logo}"/>
 			</m:MaterialNavBar>
 			<m:MaterialSideNav m:id="mysidenav" type="FIXED" top="64" width="200" closeOnClick="true" alwaysShowActivator="true" showOnAttach="true">
 				<m:MaterialLink textColor="RED" text="2 players game" ui:field="two_players_game"/>

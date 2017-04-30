@@ -7,6 +7,7 @@ D:\eclipseWorkspace\hanabi-material\src\main\java\org\harukero\hanabi\client\app
 D:\eclipseWorkspace\hanabi-material\src\main\java\org\harukero\hanabi\client\controllers\CardZonesController.java
 D:\eclipseWorkspace\hanabi-material\src\main\java\org\harukero\hanabi\client\application\ApplicationModule.java
 D:\eclipseWorkspace\hanabi-material\src\main\java\org\harukero\hanabi\shared\core\HanabiCard.java
+D:\eclipseWorkspace\hanabi-material\src\main\java\org\harukero\hanabi\client\views\HanabiPopupPanel.java
 D:\eclipseWorkspace\hanabi-material\src\main\java\org\harukero\hanabi\client\views\PlayerZoneView.java
 D:\eclipseWorkspace\hanabi-material\src\main\java\org\harukero\hanabi\client\rpc\HanabiStateUpdaterServiceAsync.java
 D:\eclipseWorkspace\hanabi-material\src\main\java\org\harukero\hanabi\client\application\home\HomePresenter.java

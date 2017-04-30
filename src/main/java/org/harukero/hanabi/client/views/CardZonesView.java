@@ -49,7 +49,7 @@ public class CardZonesView extends MaterialRow {
 						.setCardLabelText("Zone for yellow cards");
 				break;
 			default:
-				throw new IllegalStateException("Error, the color " + color + " isn't allowed in Hannabi");
+				throw new IllegalStateException("Error, the color " + color + " isn't allowed in Hanabi");
 			}
 			zoneByColor.put(color, view);
 			this.add(view);

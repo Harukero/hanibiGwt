@@ -106,19 +106,41 @@ public class HanabiStateUpdaterServiceImpl extends RemoteServiceServlet implemen
 		});
 	}
 
+	private static final Random r = new Random();
+
 	private void doStuff(int playerId, HanabiState state, HanabiAction action) {
 		HanabiActionBuilder builder = new HanabiActionBuilder();
 		for (int player = 1; player <= state.getNbOfPlayers(); player++) {
 			if (playerId != player) {
 				// give info about 1
-				if (hasRankOneUnknown.get(player) && state.getInfoLeft() > 0) {
+				if (hasRankOneUnknown.get(player) && state.getInfoLeft() > 0 && state.getCardsByPlayers().get(player)
+						.stream().filter(card -> card.getRank() == 1 && !card.isRankKnown()).count() != 0) {
 					builder.setActionType(HanabiActionType.INFORMATION).setPlayerId(player).setRankForInfo(1);
 					HanabiAction newAction = builder.build();
 					applyAndSaveAction(newAction, state);
 					return;
 				} // give info about 5
-				else if (hasRankFiveUnknown.get(player) && state.getInfoLeft() > 0) {
+				else if (hasRankFiveUnknown.get(player) && state.getInfoLeft() > 0 && state.getCardsByPlayers()
+						.get(player).stream().filter(card -> card.getRank() == 5 && !card.isRankKnown()).count() != 0) {
 					builder.setActionType(HanabiActionType.INFORMATION).setPlayerId(player).setRankForInfo(5);
+					HanabiAction newAction = builder.build();
+					applyAndSaveAction(newAction, state);
+					return;
+				} else if (r.nextBoolean() && state.getCardsByPlayers().get(player).stream()
+						.filter(card -> !card.isColorKnown()).count() != 0) {
+					Color selectedColor = state.getCardsByPlayers().get(player).stream()
+							.filter(card -> !card.isColorKnown()).map(card -> card.getColor()).findAny().get();
+					builder.setActionType(HanabiActionType.INFORMATION).setPlayerId(player)
+							.setColorForInfo(selectedColor);
+					HanabiAction newAction = builder.build();
+					applyAndSaveAction(newAction, state);
+					return;
+				} else if (r.nextInt() % 3 == 0 && state.getCardsByPlayers().get(player).stream()
+						.filter(card -> !card.isRankKnown()).count() != 0) {
+					Integer selectedRank = state.getCardsByPlayers().get(player).stream()
+							.filter(card -> !card.isRankKnown()).map(card -> card.getRank()).findAny().get();
+					builder.setActionType(HanabiActionType.INFORMATION).setPlayerId(player)
+							.setRankForInfo(selectedRank);
 					HanabiAction newAction = builder.build();
 					applyAndSaveAction(newAction, state);
 					return;
@@ -135,24 +157,22 @@ public class HanabiStateUpdaterServiceImpl extends RemoteServiceServlet implemen
 					return;
 				}
 			}
-		} else {
-			// check if already played card exists
-			for (HanabiCard card : state.getPlayersHand(playerId)) {
-				if (card.isRankKnown() && card.isColorKnown()
-						&& card.getRank() < nextRankByColor.get(card.getColor())) {
-					builder.setActionType(HanabiActionType.DISCARD).setPlayerId(playerId).setCardImpacted(card);
-					applyAndSaveAction(builder.build(), state);
-					return;
-				}
-			}
-			// (state.getPlayersHand(playerId).size()
-			Random r = new Random();
-			int nextInt = r.nextInt(state.getPlayersHand(playerId).size());
-			HanabiCard hanabiCard = state.getPlayersHand(playerId).get(nextInt);
-			builder.setActionType(HanabiActionType.DISCARD).setPlayerId(playerId).setCardImpacted(hanabiCard);
-			applyAndSaveAction(builder.build(), state);
-			// TODO: check card not dangerous.
 		}
+		// check if already played card exists
+		for (HanabiCard card : state.getPlayersHand(playerId)) {
+			if (card.isRankKnown() && card.isColorKnown() && card.getRank() < nextRankByColor.get(card.getColor())) {
+				builder.setActionType(HanabiActionType.DISCARD).setPlayerId(playerId).setCardImpacted(card);
+				applyAndSaveAction(builder.build(), state);
+				return;
+			}
+		}
+		// (state.getPlayersHand(playerId).size()
+		Random r = new Random();
+		int nextInt = r.nextInt(state.getPlayersHand(playerId).size());
+		HanabiCard hanabiCard = state.getPlayersHand(playerId).get(nextInt);
+		builder.setActionType(HanabiActionType.DISCARD).setPlayerId(playerId).setCardImpacted(hanabiCard);
+		applyAndSaveAction(builder.build(), state);
+		// TODO: check card not dangerous.
 
 	}
 

@@ -27,6 +27,7 @@
     <inherits name="com.gwtplatform.mvp.MvpWithEntryPoint"/>
     <inherits name="com.google.gwt.logging.Logging"/>
 	<inherits name="com.google.gwt.i18n.CldrLocales"/>
+	<inherits name="com.google.gwt.resources.Resources" />
 	
     <extend-property name="locale" values="ja"/>
     <extend-property name="locale" values="fr"/>

@@ -48,3 +48,4 @@ org\harukero\hanabi\client\controllers\PlayerHandViewController.class
 org\harukero\hanabi\shared\core\HanabiCard.class
 org\harukero\hanabi\client\rpc\HanabiAsyncCallback.class
 org\harukero\hanabi\client\views\HanabiActionView.class
+org\harukero\hanabi\client\views\HanabiPopupPanel.class
