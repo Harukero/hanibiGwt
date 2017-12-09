@@ -1,0 +1,3 @@
+# Module Hanabi
+# RPC service class, partial path of RPC policy file
+com.harukero.hanabi.client.rpc.HanabiStateUpdaterService, EA18A293CA655CF08673AA8930719A88.gwt.rpc

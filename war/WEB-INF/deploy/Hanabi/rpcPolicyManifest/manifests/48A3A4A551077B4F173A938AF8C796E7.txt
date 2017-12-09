@@ -1,0 +1,2 @@
+serviceClass: com.harukero.hanabi.client.rpc.HanabiStateUpdaterService
+path: EA18A293CA655CF08673AA8930719A88.gwt.rpc
