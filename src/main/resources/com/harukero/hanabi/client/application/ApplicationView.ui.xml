@@ -19,23 +19,17 @@
   -->
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
         xmlns:g='urn:import:com.google.gwt.user.client.ui'
+        xmlns:hanabiSideNav='urn:import:com.harukero.hanabi.client.sideNav'
+        xmlns:hanabi='urn:import:com.harukero.hanabi.client.views'
         xmlns:m="urn:import:gwt.material.design.client.ui">
 
     <ui:with field="res" type="com.harukero.hanabi.client.resources.AppResources"/>
 
     <m:MaterialPanel>
         <m:MaterialHeader ui:field="header">
-			<m:MaterialNavBar backgroundColor="PURPLE_DARKEN_4"  activates="mysidenav">
-				<m:MaterialImage resource="{res.logo}"/>
-			</m:MaterialNavBar>
-			<m:MaterialSideNav m:id="mysidenav" top="64" width="200" closeOnClick="true" alwaysShowActivator="true" showOnAttach="true">
-				<m:MaterialLink textColor="RED" text="2 players game" ui:field="two_players_game"/>
-				<m:MaterialLink textColor="YELLOW" text="3 players game" ui:field="three_players_game"/>
-				<m:MaterialLink textColor="GREEN" text="4 players game" ui:field="four_players_game"/>
-				<m:MaterialLink textColor="BLUE" text="5 players game" ui:field="five_players_game"/>
-				<m:MaterialLink textColor="GREY" text="Rules" ui:field="rules"/>
-			</m:MaterialSideNav>
+			<hanabi:HanabiNavBar/>
         </m:MaterialHeader>
+		<hanabiSideNav:HanabiSideNavView/>
         <m:MaterialPanel ui:field="mainPanel" ui:id="mainPanel">
 			
 			<m:MaterialPanel ui:field="panelPlayers">

@@ -1,0 +1,15 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+        xmlns:g='urn:import:com.google.gwt.user.client.ui'
+        xmlns:m="urn:import:gwt.material.design.client.ui">
+
+    <ui:with field="res" type="com.harukero.hanabi.client.resources.AppResources"/>
+    
+	<m:MaterialSideNav m:id="mysidenav" top="64" width="200" closeOnClick="true" alwaysShowActivator="true" showOnAttach="true">
+		<m:MaterialLink textColor="RED" text="2 players game" ui:field="two_players_game"/>
+		<m:MaterialLink textColor="YELLOW" text="3 players game" ui:field="three_players_game"/>
+		<m:MaterialLink textColor="GREEN" text="4 players game" ui:field="four_players_game"/>
+		<m:MaterialLink textColor="BLUE" text="5 players game" ui:field="five_players_game"/>
+		<m:MaterialLink textColor="GREY" text="Rules" ui:field="rules"/>
+	</m:MaterialSideNav>
+</ui:UiBinder> 

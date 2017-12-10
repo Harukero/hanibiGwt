@@ -34,7 +34,6 @@ import com.harukero.hanabi.client.controllers.PlayerHandViewController;
 import com.harukero.hanabi.client.views.CardZonesView;
 import com.harukero.hanabi.client.views.HanabiActionView;
 import com.harukero.hanabi.client.views.HanabiCardView;
-import com.harukero.hanabi.client.views.HanabiModal;
 import com.harukero.hanabi.client.views.PlayerZoneView;
 import com.harukero.hanabi.shared.core.HanabiCard;
 import com.harukero.hanabi.shared.core.HanabiState;
@@ -64,17 +63,8 @@ public class ApplicationPresenter extends BasePresenter<IApplicationView, IEvent
 		zones = new CardZonesController(new CardZonesView());
 		getView().setCardsZones(zones.getView());
 		hideView();
-		bindMenu();
 	}
 	
-	private void bindMenu() {
-		getView().getTwo_players_game().addClickHandler(event -> startNewGame(2));
-		getView().getThree_players_game().addClickHandler(event -> notImplementedYet());
-		getView().getFour_players_game().addClickHandler(event -> notImplementedYet());
-		getView().getFive_players_game().addClickHandler(event -> startNewGame(5));
-		getView().getRules().addClickHandler(event -> notImplementedYet());
-	}
-
 	private void drawForPlayer(List<HanabiCard> cardsList, PlayerHandViewController playerController,
 			boolean isForViewPlayer) {
 		cardsList.stream().forEach(card -> {
@@ -109,10 +99,12 @@ public class ApplicationPresenter extends BasePresenter<IApplicationView, IEvent
 		}));
 	}
 
-	private void notImplementedYet() {
-		HanabiModal.openModal("Sorry", "Sorry, this button does nothing yet. Come back later!");
+	public void onStartNewGame(int nbPlayers) {
+		model = new HanabiState(nbPlayers);
+		getView().showView();
+		initView(model);
 	}
-
+	
 	private void resetPlayerZones(int nbOfPlayers) {
 		getView().resetPlayerZone();
 		IntStream.rangeClosed(1, nbOfPlayers).forEach(playerId -> {
@@ -123,11 +115,6 @@ public class ApplicationPresenter extends BasePresenter<IApplicationView, IEvent
 		});
 	}
 
-	private void startNewGame(int nbPlayers) {
-		model = new HanabiState(nbPlayers);
-		getView().showView();
-		initView(model);
-	}
 
 	@Override
 	public void update(HanabiState model) {

@@ -6,8 +6,6 @@ import com.harukero.hanabi.client.views.HanabiCardView;
 import com.harukero.hanabi.client.views.LifeAndInfosTokenContainerView;
 import com.harukero.hanabi.client.views.PlayerZoneView;
 
-import gwt.material.design.client.ui.MaterialLink;
-
 public interface IApplicationView {
 	void addCardForWidgetIfPossible(PlayerZoneView playerZone, HanabiCardView cardView);
 
@@ -15,17 +13,7 @@ public interface IApplicationView {
 
 	void addPlayerZone(PlayerZoneView playerZone);
 
-	MaterialLink getFive_players_game();
-
-	MaterialLink getFour_players_game();
-
 	LifeAndInfosTokenContainerView getLifeAndInfos();
-
-	MaterialLink getRules();
-
-	MaterialLink getThree_players_game();
-
-	MaterialLink getTwo_players_game();
 
 	void hideAll();
 

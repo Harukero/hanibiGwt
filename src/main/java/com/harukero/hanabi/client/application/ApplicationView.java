@@ -39,7 +39,6 @@ import com.harukero.hanabi.client.views.LifeAndInfosTokenContainerView;
 import com.harukero.hanabi.client.views.PlayerZoneView;
 
 import gwt.material.design.client.ui.MaterialColumn;
-import gwt.material.design.client.ui.MaterialLink;
 import gwt.material.design.client.ui.MaterialPanel;
 import gwt.material.design.client.ui.MaterialRow;
 
@@ -63,9 +62,6 @@ public class ApplicationView extends Composite implements IApplicationView {
 
 	@UiField
 	MaterialPanel lifePointsAndInfos;
-
-	@UiField
-	MaterialLink two_players_game, three_players_game, four_players_game, five_players_game, rules;
 
 	private LifeAndInfosTokenContainerView lifesAndInfos;
 
@@ -113,34 +109,10 @@ public class ApplicationView extends Composite implements IApplicationView {
 	}
 
 	@Override
-	public MaterialLink getFive_players_game() {
-		return five_players_game;
-	}
-
-	@Override
-	public MaterialLink getFour_players_game() {
-		return four_players_game;
-	}
-
-	@Override
 	public LifeAndInfosTokenContainerView getLifeAndInfos() {
 		return lifesAndInfos;
 	}
 
-	@Override
-	public MaterialLink getRules() {
-		return rules;
-	}
-
-	@Override
-	public MaterialLink getThree_players_game() {
-		return three_players_game;
-	}
-
-	@Override
-	public MaterialLink getTwo_players_game() {
-		return two_players_game;
-	}
 
 	@Override
 	public void hideAll() {

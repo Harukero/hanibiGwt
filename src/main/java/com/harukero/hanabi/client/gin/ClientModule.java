@@ -21,7 +21,7 @@ package com.harukero.hanabi.client.gin;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.ui.RootLayoutPanel;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.harukero.hanabi.client.resources.AppResources;
 import com.mvp4g.client.Mvp4gModule;
@@ -35,7 +35,7 @@ public class ClientModule implements EntryPoint {
 	    
 	    Mvp4gModule module = GWT.create(Mvp4gModule.class);
 	    module.createAndStartModule();
-	    RootLayoutPanel.get().add((Widget) module.getStartView());
+	    RootPanel.get().add((Widget) module.getStartView());
 	  }
 
 }
