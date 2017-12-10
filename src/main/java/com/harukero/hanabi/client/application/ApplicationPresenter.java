@@ -27,12 +27,7 @@ import java.util.logging.Logger;
 import java.util.stream.IntStream;
 
 import com.google.inject.Inject;
-import com.google.web.bindery.event.shared.EventBus;
-import com.gwtplatform.mvp.client.Presenter;
-import com.gwtplatform.mvp.client.View;
-import com.gwtplatform.mvp.client.annotations.ProxyStandard;
-import com.gwtplatform.mvp.client.presenter.slots.NestedSlot;
-import com.gwtplatform.mvp.client.proxy.Proxy;
+import com.harukero.hanabi.client.IEventBus;
 import com.harukero.hanabi.client.controllers.CardZonesController;
 import com.harukero.hanabi.client.controllers.HanabiCardController;
 import com.harukero.hanabi.client.controllers.PlayerHandViewController;
@@ -40,80 +35,44 @@ import com.harukero.hanabi.client.views.CardZonesView;
 import com.harukero.hanabi.client.views.HanabiActionView;
 import com.harukero.hanabi.client.views.HanabiCardView;
 import com.harukero.hanabi.client.views.HanabiModal;
-import com.harukero.hanabi.client.views.LifeAndInfosTokenContainerView;
 import com.harukero.hanabi.client.views.PlayerZoneView;
 import com.harukero.hanabi.shared.core.HanabiCard;
 import com.harukero.hanabi.shared.core.HanabiState;
+import com.mvp4g.client.annotation.Presenter;
+import com.mvp4g.client.presenter.BasePresenter;
 
 import gwt.material.design.client.constants.Color;
-import gwt.material.design.client.ui.MaterialLink;
 
-public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView, ApplicationPresenter.MyProxy>
-		implements IParent {
-	@ProxyStandard
-	interface MyProxy extends Proxy<ApplicationPresenter> {
-	}
-
-	interface MyView extends View {
-
-		void addCardForWidgetIfPossible(PlayerZoneView playerZone, HanabiCardView cardView);
-
-		void addNewActionInfo(HanabiActionView action);
-
-		void addPlayerZone(PlayerZoneView playerZone);
-
-		MaterialLink getFive_players_game();
-
-		MaterialLink getFour_players_game();
-
-		LifeAndInfosTokenContainerView getLifeAndInfos();
-
-		MaterialLink getRules();
-
-		MaterialLink getThree_players_game();
-
-		MaterialLink getTwo_players_game();
-
-		void hideAll();
-
-		void resetAside();
-
-		void resetPlayerZone();
-
-		void showView();
-
-		void setCardsZones(CardZonesView zones);
-
-	}
+@Presenter(view = ApplicationView.class)
+public class ApplicationPresenter extends BasePresenter<IApplicationView, IEventBus> implements IParent {
 
 	private static final Logger logger = Logger.getLogger("HanabiLogger");
 
-	public static final NestedSlot SLOT_MAIN = new NestedSlot();
-
 	private HanabiState model;
-
-	private MyView view;
 
 	private Map<Integer, PlayerHandViewController> playerControllerById = new HashMap<>();
 
 	private CardZonesController zones;
 
 	@Inject
-	ApplicationPresenter(EventBus eventBus, MyView view, MyProxy proxy) {
-		super(eventBus, view, proxy, RevealType.Root);
-		this.view = view;
+	ApplicationPresenter() {
+
+	}
+
+	@Override
+	public void bind() {
 		zones = new CardZonesController(new CardZonesView());
-		this.view.setCardsZones(zones.getView());
+		getView().setCardsZones(zones.getView());
 		hideView();
 		bindMenu();
 	}
-
+	
 	private void bindMenu() {
-		view.getTwo_players_game().addClickHandler(event -> startNewGame(2));
-		view.getThree_players_game().addClickHandler(event -> notImplementedYet());
-		view.getFour_players_game().addClickHandler(event -> notImplementedYet());
-		view.getFive_players_game().addClickHandler(event -> startNewGame(5));
-		view.getRules().addClickHandler(event -> notImplementedYet());
+		getView().getTwo_players_game().addClickHandler(event -> startNewGame(2));
+		getView().getThree_players_game().addClickHandler(event -> notImplementedYet());
+		getView().getFour_players_game().addClickHandler(event -> notImplementedYet());
+		getView().getFive_players_game().addClickHandler(event -> startNewGame(5));
+		getView().getRules().addClickHandler(event -> notImplementedYet());
 	}
 
 	private void drawForPlayer(List<HanabiCard> cardsList, PlayerHandViewController playerController,
@@ -123,12 +82,12 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
 					isForViewPlayer);
 			HanabiCardController cardController = new HanabiCardController(this, model, card, cardView);
 			PlayerZoneView playerZone = playerController.getView();
-			view.addCardForWidgetIfPossible(playerZone, cardController.getView());
+			getView().addCardForWidgetIfPossible(playerZone, cardController.getView());
 		});
 	}
 
 	private void hideView() {
-		view.hideAll();
+		getView().hideAll();
 	}
 
 	private void initView(HanabiState model) {
@@ -155,18 +114,18 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
 	}
 
 	private void resetPlayerZones(int nbOfPlayers) {
-		view.resetPlayerZone();
+		getView().resetPlayerZone();
 		IntStream.rangeClosed(1, nbOfPlayers).forEach(playerId -> {
 			PlayerZoneView playerView = new PlayerZoneView("Player " + playerId);
 			PlayerHandViewController playerController = new PlayerHandViewController(playerView, playerId);
-			view.addPlayerZone(playerView);
+			getView().addPlayerZone(playerView);
 			playerControllerById.put(playerId, playerController);
 		});
 	}
 
 	private void startNewGame(int nbPlayers) {
 		model = new HanabiState(nbPlayers);
-		view.showView();
+		getView().showView();
 		initView(model);
 	}
 
@@ -178,14 +137,14 @@ public class ApplicationPresenter extends Presenter<ApplicationPresenter.MyView,
 	}
 
 	private void updateLifeAndInfos(HanabiState model) {
-		view.getLifeAndInfos().reset();
-		IntStream.rangeClosed(1, model.getLifeTokens()).forEach(life -> view.getLifeAndInfos().addNewLife());
-		IntStream.rangeClosed(1, model.getInfoLeft()).forEach(life -> view.getLifeAndInfos().addNewInfo());
+		getView().getLifeAndInfos().reset();
+		IntStream.rangeClosed(1, model.getLifeTokens()).forEach(life -> getView().getLifeAndInfos().addNewLife());
+		IntStream.rangeClosed(1, model.getInfoLeft()).forEach(life -> getView().getLifeAndInfos().addNewInfo());
 
 	}
 
 	private void updateNewsFeed(HanabiState model) {
-		view.resetAside();
-		model.getActionsDone().stream().forEach(action -> view.addNewActionInfo(new HanabiActionView(action)));
+		getView().resetAside();
+		model.getActionsDone().stream().forEach(action -> getView().addNewActionInfo(new HanabiActionView(action)));
 	}
 }

@@ -19,6 +19,7 @@
  */
 package com.harukero.hanabi.client.resources;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.ImageResource;
@@ -27,6 +28,8 @@ public interface AppResources extends ClientBundle {
 	interface Normalize extends CssResource {
 	}
 
+	AppResources resources = GWT.create(AppResources.class);
+	
 	interface Style extends CssResource {
 
 		String cardButton();

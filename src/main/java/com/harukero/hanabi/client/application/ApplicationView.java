@@ -26,10 +26,11 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
-import com.gwtplatform.mvp.client.ViewImpl;
 import com.harukero.hanabi.client.utils.ViewUtils;
 import com.harukero.hanabi.client.views.CardZonesView;
 import com.harukero.hanabi.client.views.HanabiActionView;
@@ -42,9 +43,11 @@ import gwt.material.design.client.ui.MaterialLink;
 import gwt.material.design.client.ui.MaterialPanel;
 import gwt.material.design.client.ui.MaterialRow;
 
-public class ApplicationView extends ViewImpl implements ApplicationPresenter.MyView {
+public class ApplicationView extends Composite implements IApplicationView {
 	interface Binder extends UiBinder<Widget, ApplicationView> {
 	}
+    
+	private static final Binder uiBinder = GWT.create(Binder.class);
 
 	private Map<MaterialPanel, MaterialRow> handsByPlayers;
 	private Map<MaterialRow, List<Widget>> cardsInHands;
@@ -67,7 +70,7 @@ public class ApplicationView extends ViewImpl implements ApplicationPresenter.My
 	private LifeAndInfosTokenContainerView lifesAndInfos;
 
 	@Inject
-	ApplicationView(Binder uiBinder) {
+	ApplicationView() {
 		initWidget(uiBinder.createAndBindUi(this));
 		handsByPlayers = new HashMap<>();
 		cardsInHands = new HashMap<>();

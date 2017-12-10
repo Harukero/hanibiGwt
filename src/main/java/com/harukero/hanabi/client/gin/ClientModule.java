@@ -19,26 +19,23 @@
  */
 package com.harukero.hanabi.client.gin;
 
-import com.gwtplatform.mvp.client.annotations.DefaultPlace;
-import com.gwtplatform.mvp.client.annotations.ErrorPlace;
-import com.gwtplatform.mvp.client.annotations.UnauthorizedPlace;
-import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;
-import com.gwtplatform.mvp.client.gin.DefaultModule;
-import com.harukero.hanabi.client.application.ApplicationModule;
-import com.harukero.hanabi.client.place.NameTokens;
-import com.harukero.hanabi.client.resources.ResourceLoader;
+import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.ui.RootLayoutPanel;
+import com.google.gwt.user.client.ui.Widget;
+import com.harukero.hanabi.client.resources.AppResources;
+import com.mvp4g.client.Mvp4gModule;
 
-public class ClientModule extends AbstractPresenterModule {
-    @Override
-    protected void configure() {
-        install(new DefaultModule.Builder().build());
-        install(new ApplicationModule());
+public class ClientModule implements EntryPoint {
+    
+	  @Override
+	  public void onModuleLoad() {
+	    AppResources.resources.style().ensureInjected();
+	    AppResources.resources.normalize().ensureInjected();
+	    
+	    Mvp4gModule module = GWT.create(Mvp4gModule.class);
+	    module.createAndStartModule();
+	    RootLayoutPanel.get().add((Widget) module.getStartView());
+	  }
 
-        bind(ResourceLoader.class).asEagerSingleton();
-
-        // DefaultPlaceManager Places
-        bindConstant().annotatedWith(DefaultPlace.class).to(NameTokens.HOME);
-        bindConstant().annotatedWith(ErrorPlace.class).to(NameTokens.HOME);
-        bindConstant().annotatedWith(UnauthorizedPlace.class).to(NameTokens.HOME);
-    }
 }
