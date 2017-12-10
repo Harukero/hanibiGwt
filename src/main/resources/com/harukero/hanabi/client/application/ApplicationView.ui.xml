@@ -28,7 +28,7 @@
 			<m:MaterialNavBar backgroundColor="PURPLE_DARKEN_4"  activates="mysidenav">
 				<m:MaterialImage resource="{res.logo}"/>
 			</m:MaterialNavBar>
-			<m:MaterialSideNav m:id="mysidenav" type="FIXED" top="64" width="200" closeOnClick="true" alwaysShowActivator="true" showOnAttach="true">
+			<m:MaterialSideNav m:id="mysidenav" top="64" width="200" closeOnClick="true" alwaysShowActivator="true" showOnAttach="true">
 				<m:MaterialLink textColor="RED" text="2 players game" ui:field="two_players_game"/>
 				<m:MaterialLink textColor="YELLOW" text="3 players game" ui:field="three_players_game"/>
 				<m:MaterialLink textColor="GREEN" text="4 players game" ui:field="four_players_game"/>
