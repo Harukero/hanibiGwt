@@ -3,6 +3,8 @@ package com.harukero.hanabi.client.views;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.gwt.core.client.GWT;
+import com.harukero.hanabi.client.i18n.HanabiTextConstants;
 import com.harukero.hanabi.client.utils.ViewUtils;
 import com.harukero.hanabi.shared.utils.SharedUtils;
 
@@ -19,6 +21,8 @@ public class CardZonesView extends MaterialRow {
 		init();
 	}
 
+	private static HanabiTextConstants contants = GWT.create(HanabiTextConstants.class);
+	
 	private void init() {
 		MaterialLabel label = new MaterialLabel("Hanabi");
 		MaterialColumn col = new MaterialColumn();
@@ -29,23 +33,23 @@ public class CardZonesView extends MaterialRow {
 			CardZoneView view = new CardZoneView();
 			switch (color) {
 			case RED:
-				view.setCardBackgroundColor(Color.RED).setCardTextColor(Color.WHITE).setCardTitleText("RED")
+				view.setCardBackgroundColor(Color.RED).setCardTextColor(Color.WHITE).setCardTitleText(contants.color_red())
 						.setCardLabelText("Zone for red cards");
 				break;
 			case GREEN:
-				view.setCardBackgroundColor(Color.GREEN).setCardTextColor(Color.WHITE).setCardTitleText("GREEN")
+				view.setCardBackgroundColor(Color.GREEN).setCardTextColor(Color.WHITE).setCardTitleText(contants.color_green())
 						.setCardLabelText("Zone for green cards");
 				break;
 			case WHITE:
-				view.setCardBackgroundColor(Color.WHITE).setCardTextColor(Color.BLACK).setCardTitleText("WHITE")
+				view.setCardBackgroundColor(Color.WHITE).setCardTextColor(Color.BLACK).setCardTitleText(contants.color_white())
 						.setCardLabelText("Zone for white cards");
 				break;
 			case BLUE:
-				view.setCardBackgroundColor(Color.BLUE).setCardTextColor(Color.WHITE).setCardTitleText("BLUE")
+				view.setCardBackgroundColor(Color.BLUE).setCardTextColor(Color.WHITE).setCardTitleText(contants.color_blue())
 						.setCardLabelText("Zone for blue cards");
 				break;
 			case YELLOW:
-				view.setCardBackgroundColor(Color.YELLOW).setCardTextColor(Color.BLACK).setCardTitleText("YELLOW")
+				view.setCardBackgroundColor(Color.YELLOW).setCardTextColor(Color.BLACK).setCardTitleText(contants.color_yellow())
 						.setCardLabelText("Zone for yellow cards");
 				break;
 			default:
